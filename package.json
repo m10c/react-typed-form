@@ -2,9 +2,9 @@
   "name": "experimental-form",
   "version": "0.0.0",
   "author": "James Isaac <james.isaac@gmail.com>",
-  "main": "./js",
+  "main": "./src",
   "scripts": {
-    "prettier": "prettier --write \"js/**/*.js\"",
+    "prettier": "prettier --write \"src/**/*.js\"",
     "test": "yarn run jest && yarn run flow"
   },
   "jest": {
