@@ -59,11 +59,14 @@ export default function valueForm<
 
       handleValueChange = (field: string, value: mixed): void => {
         // Must be function for some race condition (?)
-        this.setState(currentState => ({
-          ...currentState,
-          values: { ...currentState.values, [field]: value },
-          invalid: this.determineInvalid(this.state.values),
-        }));
+        this.setState(currentState => {
+          const values = { ...currentState.values, [field]: value };
+          return {
+            ...currentState,
+            values,
+            invalid: this.determineInvalid(values),
+          };
+        });
       };
 
       handleSubmit = () => {
