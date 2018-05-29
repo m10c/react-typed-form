@@ -1,10 +1,10 @@
 // @flow
 
 import validate from 'validate.js';
-import type { FormErrors, ValuesMap } from '../../../types';
+import type { FormErrors } from '../../../types';
 
-export function bridgeValidatejs(constraints: {}): (
-  values: ValuesMap
-) => FormErrors {
+export function bridgeValidatejs<T: {}>(constraints: {}): (
+  values: T
+) => FormErrors<T> {
   return values => validate(values, constraints) || {};
 }

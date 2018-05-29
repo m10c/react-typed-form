@@ -1,63 +1,74 @@
 // @flow
+/* eslint-disable no-console */
 
 import * as React from 'react';
 import { Button, View } from 'react-native';
-import { valueForm } from '../';
+import { withForm } from '../';
 import { TextInput as FieldTextInput } from '../bridge/components/react-native';
 import { bridgeValidatejs } from '../bridge/validation/validatejs';
 
-import type { FormProp } from '../';
+import type { TypedFormProp } from '../';
+
+type LoginData = {|
+  username?: string,
+  password?: string,
+|};
 
 type Props = $ReadOnly<{|
   foo: number,
-  form: FormProp,
+  form: TypedFormProp<LoginData>,
 |}>;
 
-export const LoginForm = ({
+const LoginForm = ({
   form: { getFieldProps, handleSubmit, isLoading },
 }: Props) => (
   <View>
     <FieldTextInput field={getFieldProps('username')} />
     <FieldTextInput field={getFieldProps('password')} secureTextEntry />
-    <Button title="Submit" onPress={handleSubmit} />
+    <Button title="Submit" disabled={isLoading} onPress={handleSubmit} />
   </View>
 );
 
 // $FlowExpectedError
 <LoginForm foo={1} />;
 
-const EnhancedSimple = valueForm({
-  onSubmit: values => console.log(values),
+const EnhancedSimple = withForm({
+  onSubmit: values => {
+    console.log(values.username);
+    console.log(values.invalid);
+  },
 })(LoginForm);
 
 <EnhancedSimple foo={1} />;
 
 // $FlowExpectedError
-const EnhancedInvalid = valueForm({
+const EnhancedInvalid = withForm({
   onSubmit: values => console.log(values),
   foo: 'bar',
 })(LoginForm);
 
-const EnhancedOwnProps = valueForm({
-  onSubmit: (values, ownProps) => {
+<EnhancedInvalid foo={1} />;
+
+const EnhancedOwnProps = withForm(ownProps => ({
+  onSubmit: () => {
     ownProps.foo;
   },
-})(LoginForm);
+}))(LoginForm);
 
 <EnhancedOwnProps foo={1} />;
 // $FlowExpectedError
 <EnhancedOwnProps bar={1} />;
 
-const EnhancedOwnPropsInvalid = valueForm({
-  onSubmit: (values, ownProps) => {
+const EnhancedOwnPropsInvalid = withForm(ownProps => ({
+  onSubmit: () => {
     // $FlowExpectedError
     ownProps.bar;
   },
-})(LoginForm);
+}))(LoginForm);
 
 <EnhancedOwnPropsInvalid foo={1} />;
 
-const EnhancedValidatejs = valueForm({
+const EnhancedValidatejs = withForm({
   onSubmit: values => console.log(values),
   validate: bridgeValidatejs({
     username: {

@@ -1,24 +1,36 @@
 // @flow
 
-export type FieldProps = $ReadOnly<{|
+export type $Optional<T: {}> = $Shape<$ObjMap<T, <V>(V) => V | void>>;
+
+export type Options<T> = $ReadOnly<{|
+  // Required
+  onSubmit: (values: T, form: TypedFormProp<T>) => void | Promise<void>,
+
+  // Optional
+  pristineValues?: $Shape<T>, // Pristine values don't count as changes
+  validate?: (values: T) => FormErrors<T>,
+  validateOnChange?: boolean,
+|}>;
+
+export type TypedFormProp<T> = $ReadOnly<{|
+  getFieldProps: GetFieldProps<T, *, *>,
+  handleSubmit: () => void,
+  isLoading: boolean,
+  setLoading: boolean => void,
+|}>;
+
+export type TypedFieldProps<FT> = $ReadOnly<{|
   name: string,
   label: string,
-  value: mixed,
-  handleValueChange: (value: mixed) => void,
+  value: FT,
+  handleValueChange: (value: FT) => void,
   isLoading?: boolean,
   lastErrors?: string[],
   isValid?: boolean,
 |}>;
 
-export type GetFieldProps = (field: string) => FieldProps;
+type GetFieldProps<T, FK: $Keys<T>, FT: $ElementType<T, FK>> = (
+  field: FK
+) => TypedFieldProps<FT>;
 
-export type FormErrors = { [key: string]: void | string[] };
-
-export type FormProp = $ReadOnly<{|
-  getFieldProps: GetFieldProps,
-  handleSubmit: () => void,
-  isLoading: boolean,
-|}>;
-
-// eslint-disable-next-line flowtype/no-weak-types
-export type ValuesMap = { [key: string]: any };
+export type FormErrors<T: {}> = $ObjMap<T, () => string[] | void>;

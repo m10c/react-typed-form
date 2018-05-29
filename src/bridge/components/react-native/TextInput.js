@@ -3,10 +3,10 @@
 import * as React from 'react';
 import { TextInput } from 'react-native';
 
-import type { FieldProps } from '../../../types';
-
 type Props = $ReadOnly<{
-  field: FieldProps,
+  field: $ReadOnly<{
+    handleValueChange: (value: string) => void,
+  }>,
 }>;
 
 const FieldTextInput = ({ field, ...rest }: Props) => (
