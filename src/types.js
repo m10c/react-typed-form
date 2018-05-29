@@ -1,5 +1,6 @@
 // @flow
 
+// Helper for applying to a model which we're building a form around
 export type $Optional<T: {}> = $Shape<$ObjMap<T, <V>(V) => V | void>>;
 
 export type Options<T> = $ReadOnly<{|
