@@ -20,7 +20,8 @@ export type TypedFormProp<T> = $ReadOnly<{|
   isLoading: boolean,
   setLoading: boolean => void,
   formErrorList: string[],
-  addError: (field: string, error: string) => void,
+  addError: (field: $Keys<T>, error: string) => void,
+  addFormError: string => void,
 |}>;
 
 export type TypedFieldProps<FT> = $ReadOnly<{|

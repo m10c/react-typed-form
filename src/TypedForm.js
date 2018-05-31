@@ -108,6 +108,11 @@ export default class Form<T: {}> extends React.PureComponent<
         });
       },
       formErrorList: lastFormErrorList,
+      addFormError: error => {
+        this.setState({
+          lastFormErrorList: [...lastFormErrorList, error],
+        });
+      },
     };
   }
 
