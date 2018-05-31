@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable flowtype/generic-spacing */
 
 // Helper for applying to a model which we're building a form around
 export type $Optional<T: {}> = $Shape<$ObjMap<T, <V>(V) => V | void>>;
@@ -18,6 +19,7 @@ export type TypedFormProp<T> = $ReadOnly<{|
   handleSubmit: () => void,
   isLoading: boolean,
   setLoading: boolean => void,
+  formErrorList: string[],
   addError: (field: string, error: string) => void,
 |}>;
 
@@ -27,7 +29,7 @@ export type TypedFieldProps<FT> = $ReadOnly<{|
   value: FT,
   handleValueChange: (value: FT) => void,
   isLoading?: boolean,
-  lastErrors?: string[],
+  lastErrorList?: string[],
   isValid?: boolean,
 |}>;
 

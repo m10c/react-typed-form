@@ -18,6 +18,7 @@ type Props<T> = $ReadOnly<{|
 type State<T> = {|
   values: T,
   invalid: Array<$Keys<T>>,
+  lastFormErrorList: string[],
   lastErrors: FormErrors<T>,
   loading: boolean,
 |};
@@ -37,6 +38,7 @@ export default class Form<T: {}> extends React.PureComponent<
     this.state = {
       values,
       invalid: this.determineInvalid(values),
+      lastFormErrorList: [],
       lastErrors: {},
       loading: false,
     };
@@ -84,12 +86,12 @@ export default class Form<T: {}> extends React.PureComponent<
       handleValueChange: this.handleValueChange.bind(this, field),
       isLoading: loading,
       isValid: this.props.validateOnChange && !invalid.includes(field),
-      lastErrors: lastErrors[field],
+      lastErrorList: lastErrors[field],
     };
   };
 
   prepareFormProp(): TypedFormProp<T> {
-    const { loading, lastErrors } = this.state;
+    const { loading, lastErrors, lastFormErrorList } = this.state;
     return {
       getFieldProps: this.getFieldProps,
       handleSubmit: this.handleSubmit,
@@ -105,6 +107,7 @@ export default class Form<T: {}> extends React.PureComponent<
           },
         });
       },
+      formErrorList: lastFormErrorList,
     };
   }
 
@@ -115,6 +118,8 @@ export default class Form<T: {}> extends React.PureComponent<
       const errors = this.props.validate(values);
       this.setState({ lastErrors: errors });
       if (Object.keys(errors).length > 0) return;
+    } else {
+      this.setState({ lastErrors: {} });
     }
 
     this.props.onSubmit(values, this.prepareFormProp());
