@@ -89,13 +89,21 @@ export default class Form<T: {}> extends React.PureComponent<
   };
 
   prepareFormProp(): TypedFormProp<T> {
-    const { loading } = this.state;
+    const { loading, lastErrors } = this.state;
     return {
       getFieldProps: this.getFieldProps,
       handleSubmit: this.handleSubmit,
       isLoading: loading,
       setLoading: value => {
         this.setState({ loading: value });
+      },
+      addError: (field, error) => {
+        this.setState({
+          lastErrors: {
+            ...lastErrors,
+            [field]: [...(lastErrors[field] || []), error],
+          },
+        });
       },
     };
   }

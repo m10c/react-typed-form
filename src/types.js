@@ -18,6 +18,7 @@ export type TypedFormProp<T> = $ReadOnly<{|
   handleSubmit: () => void,
   isLoading: boolean,
   setLoading: boolean => void,
+  addError: (field: string, error: string) => void,
 |}>;
 
 export type TypedFieldProps<FT> = $ReadOnly<{|
