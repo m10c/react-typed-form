@@ -114,7 +114,7 @@ export default class Form<T: {}> extends React.PureComponent<
     const { values } = this.state;
 
     if (this.props.validate) {
-      const errors = this.props.validate(values);
+      const errors = this.props.validate(values) || {};
       // TODO: How would form errors fit into this API?
       this.setState({ lastErrors: errors });
       if (Object.keys(errors).length > 0) return;
