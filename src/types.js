@@ -4,6 +4,8 @@
 // Helper for applying to a model which we're building a form around
 export type $Optional<T: {}> = $Shape<$ObjMap<T, <V>(V) => V | void>>;
 
+export type ErrorFields<T> = { ...T, _form?: empty };
+
 export type Options<T> = $ReadOnly<{|
   // Required
   onSubmit: (values: T, form: TypedFormProp<T>) => void | Promise<void>,
@@ -19,9 +21,8 @@ export type TypedFormProp<T> = $ReadOnly<{|
   handleSubmit: () => void,
   isLoading: boolean,
   setLoading: boolean => void,
+  addError: (field: $Keys<ErrorFields<T>>, error: string) => void,
   formErrorList: string[],
-  addError: (field: $Keys<T>, error: string) => void,
-  addFormError: string => void,
 |}>;
 
 export type TypedFieldProps<FT> = $ReadOnly<{|
@@ -38,4 +39,4 @@ type GetFieldProps<T, FK: $Keys<T>, FT: $ElementType<T, FK>> = (
   field: FK
 ) => TypedFieldProps<FT>;
 
-export type FormErrors<T: {}> = $ObjMap<T, () => string[] | void>;
+export type FormErrors<T: {}> = $ObjMap<ErrorFields<T>, () => string[] | void>;

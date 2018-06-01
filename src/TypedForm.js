@@ -3,6 +3,7 @@
 import * as React from 'react';
 
 import type {
+  ErrorFields,
   FormErrors,
   Options,
   TypedFieldProps,
@@ -17,8 +18,7 @@ type Props<T> = $ReadOnly<{|
 
 type State<T> = {|
   values: T,
-  invalid: Array<$Keys<T>>,
-  lastFormErrorList: string[],
+  invalid: Array<$Keys<ErrorFields<T>>>,
   lastErrors: FormErrors<T>,
   loading: boolean,
 |};
@@ -38,13 +38,12 @@ export default class Form<T: {}> extends React.PureComponent<
     this.state = {
       values,
       invalid: this.determineInvalid(values),
-      lastFormErrorList: [],
       lastErrors: {},
       loading: false,
     };
   }
 
-  determineInvalid(values: T): Array<$Keys<T>> {
+  determineInvalid(values: T): Array<$Keys<ErrorFields<T>>> {
     return this.props.validate && this.props.validateOnChange
       ? Object.keys(this.props.validate(values))
       : [];
@@ -91,7 +90,7 @@ export default class Form<T: {}> extends React.PureComponent<
   };
 
   prepareFormProp(): TypedFormProp<T> {
-    const { loading, lastErrors, lastFormErrorList } = this.state;
+    const { loading, lastErrors } = this.state;
     return {
       getFieldProps: this.getFieldProps,
       handleSubmit: this.handleSubmit,
@@ -107,12 +106,7 @@ export default class Form<T: {}> extends React.PureComponent<
           },
         });
       },
-      formErrorList: lastFormErrorList,
-      addFormError: error => {
-        this.setState({
-          lastFormErrorList: [...lastFormErrorList, error],
-        });
-      },
+      formErrorList: lastErrors._form || [],
     };
   }
 
@@ -121,6 +115,7 @@ export default class Form<T: {}> extends React.PureComponent<
 
     if (this.props.validate) {
       const errors = this.props.validate(values);
+      // TODO: How would form errors fit into this API?
       this.setState({ lastErrors: errors });
       if (Object.keys(errors).length > 0) return;
     } else {
