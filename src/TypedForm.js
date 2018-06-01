@@ -113,16 +113,18 @@ export default class Form<T: {}> extends React.PureComponent<
   handleSubmit = (): void => {
     const { values } = this.state;
 
+    let errors = {};
     if (this.props.validate) {
-      const errors = this.props.validate(values) || {};
-      // TODO: How would form errors fit into this API?
-      this.setState({ lastErrors: errors });
-      if (Object.keys(errors).length > 0) return;
-    } else {
-      this.setState({ lastErrors: {} });
+      errors = this.props.validate(values);
     }
 
-    this.props.onSubmit(values, this.prepareFormProp());
+    this.setState({ lastErrors: errors }, () => {
+      if (Object.keys(errors).length === 0) {
+        // This needs to be deferred into the callback, otherwise lastErrors
+        // used by the form prop will be stale
+        this.props.onSubmit(values, this.prepareFormProp());
+      }
+    });
   };
 
   render() {
