@@ -17,7 +17,7 @@ export type Options<T> = $ReadOnly<{|
 |}>;
 
 export type TypedFormProp<T> = $ReadOnly<{|
-  getFieldProps: GetFieldProps<T, *, *>,
+  getFieldProps: GetFieldProps<T>,
   handleSubmit: () => void,
   isLoading: boolean,
   setLoading: boolean => void,
@@ -35,7 +35,7 @@ export type TypedFieldProps<FT> = $ReadOnly<{|
   isValid?: boolean,
 |}>;
 
-type GetFieldProps<T, FK: $Keys<T>, FT: $ElementType<T, FK>> = (
+type GetFieldProps<T> = <FK: $Keys<T>, FT: $ElementType<T, FK>>(
   field: FK
 ) => TypedFieldProps<FT>;
 
