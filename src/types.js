@@ -25,11 +25,11 @@ export type TypedFormProp<T> = $ReadOnly<{|
   formErrorList: string[],
 |}>;
 
-export type TypedFieldProps<FT> = $ReadOnly<{|
+export type TypedFieldProps<FTOut, FTIn = FTOut | void> = $ReadOnly<{|
   name: string,
   label: string,
-  value: FT,
-  handleValueChange: (value: FT) => void,
+  value: FTIn,
+  handleValueChange: (value: FTOut) => void,
   isLoading?: boolean,
   lastErrorList?: string[],
   isValid?: boolean,
