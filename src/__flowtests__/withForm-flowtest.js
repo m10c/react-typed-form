@@ -4,7 +4,7 @@
 import * as React from 'react';
 import { Button, View } from 'react-native';
 import { withForm } from '../';
-import { TextInput as FieldTextInput } from '../bridge/components/react-native';
+import { FieldTextInput } from '../bridge/components/react-native';
 import { bridgeValidatejs } from '../bridge/validation/validatejs';
 
 import type { TypedFormProp } from '../';

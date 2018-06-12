@@ -3,6 +3,7 @@
 import * as React from 'react';
 
 import type {
+  ErrorFields,
   FormErrors,
   Options,
   TypedFieldProps,
@@ -17,7 +18,7 @@ type Props<T> = $ReadOnly<{|
 
 type State<T> = {|
   values: T,
-  invalid: Array<$Keys<T>>,
+  invalid: Array<$Keys<ErrorFields<T>>>,
   lastErrors: FormErrors<T>,
   loading: boolean,
 |};
@@ -42,7 +43,7 @@ export default class Form<T: {}> extends React.PureComponent<
     };
   }
 
-  determineInvalid(values: T): Array<$Keys<T>> {
+  determineInvalid(values: T): Array<$Keys<ErrorFields<T>>> {
     return this.props.validate && this.props.validateOnChange
       ? Object.keys(this.props.validate(values))
       : [];
@@ -84,12 +85,12 @@ export default class Form<T: {}> extends React.PureComponent<
       handleValueChange: this.handleValueChange.bind(this, field),
       isLoading: loading,
       isValid: this.props.validateOnChange && !invalid.includes(field),
-      lastErrors: lastErrors[field],
+      lastErrorList: lastErrors[field],
     };
   };
 
   prepareFormProp(): TypedFormProp<T> {
-    const { loading } = this.state;
+    const { loading, lastErrors } = this.state;
     return {
       getFieldProps: this.getFieldProps,
       handleSubmit: this.handleSubmit,
@@ -97,19 +98,33 @@ export default class Form<T: {}> extends React.PureComponent<
       setLoading: value => {
         this.setState({ loading: value });
       },
+      addError: (field, error) => {
+        this.setState({
+          lastErrors: {
+            ...lastErrors,
+            [field]: [...(lastErrors[field] || []), error],
+          },
+        });
+      },
+      formErrorList: lastErrors._form || [],
     };
   }
 
   handleSubmit = (): void => {
     const { values } = this.state;
 
+    let errors = {};
     if (this.props.validate) {
-      const errors = this.props.validate(values);
-      this.setState({ lastErrors: errors });
-      if (Object.keys(errors).length > 0) return;
+      errors = this.props.validate(values);
     }
 
-    this.props.onSubmit(values, this.prepareFormProp());
+    this.setState({ lastErrors: errors }, () => {
+      if (Object.keys(errors).length === 0) {
+        // This needs to be deferred into the callback, otherwise lastErrors
+        // used by the form prop will be stale
+        this.props.onSubmit(values, this.prepareFormProp());
+      }
+    });
   };
 
   render() {

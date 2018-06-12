@@ -4,7 +4,7 @@
 import * as React from 'react';
 import { Button, View } from 'react-native';
 import { TypedForm } from '..';
-import { TextInput as FieldTextInput } from '../bridge/components/react-native';
+import { FieldSwitch, FieldTextInput } from '../bridge/components/react-native';
 
 import type { $Optional } from '..';
 
@@ -90,7 +90,12 @@ const PristineLoginScreen = () => (
 );
 <PristineLoginScreen />;
 
-type User = { username: string, password?: string, enabled: boolean };
+type User = {
+  username: string,
+  password: string | null,
+  dob: string | null,
+  enabled: boolean,
+};
 
 class PristineModelLoginForm extends TypedForm<$Optional<User>> {}
 
@@ -99,10 +104,18 @@ const PristineModelLoginScreen = ({ user }: { user: User }) => (
     pristineValues={user}
     onSubmit={values => console.log(values)}
   >
-    {() => <View />}
+    {({ getFieldProps }) => (
+      <View>
+        <FieldTextInput field={getFieldProps('username')} />
+        <FieldTextInput field={getFieldProps('password')} secureTextEntry />
+        <FieldSwitch field={getFieldProps('enabled')} />
+      </View>
+    )}
   </PristineModelLoginForm>
 );
-<PristineModelLoginScreen user={{ username: 'James', enabled: true }} />;
+<PristineModelLoginScreen
+  user={{ username: 'James', password: null, dob: null, enabled: true }}
+/>;
 
 const PristineBrokenLoginScreen = () => (
   <PristineLoginForm

@@ -1,6 +1,10 @@
 // @flow
+/* eslint-disable flowtype/generic-spacing */
 
+// Helper for applying to a model which we're building a form around
 export type $Optional<T: {}> = $Shape<$ObjMap<T, <V>(V) => V | void>>;
+
+export type ErrorFields<T> = { ...T, _form?: empty };
 
 export type Options<T> = $ReadOnly<{|
   // Required
@@ -13,10 +17,12 @@ export type Options<T> = $ReadOnly<{|
 |}>;
 
 export type TypedFormProp<T> = $ReadOnly<{|
-  getFieldProps: GetFieldProps<T, *, *>,
+  getFieldProps: GetFieldProps<T>,
   handleSubmit: () => void,
   isLoading: boolean,
   setLoading: boolean => void,
+  addError: (field: $Keys<ErrorFields<T>>, error: string) => void,
+  formErrorList: string[],
 |}>;
 
 export type TypedFieldProps<FT> = $ReadOnly<{|
@@ -25,12 +31,12 @@ export type TypedFieldProps<FT> = $ReadOnly<{|
   value: FT,
   handleValueChange: (value: FT) => void,
   isLoading?: boolean,
-  lastErrors?: string[],
+  lastErrorList?: string[],
   isValid?: boolean,
 |}>;
 
-type GetFieldProps<T, FK: $Keys<T>, FT: $ElementType<T, FK>> = (
+type GetFieldProps<T> = <FK: $Keys<T>, FT: $ElementType<T, FK>>(
   field: FK
 ) => TypedFieldProps<FT>;
 
-export type FormErrors<T: {}> = $ObjMap<T, () => string[] | void>;
+export type FormErrors<T: {}> = $ObjMap<ErrorFields<T>, () => string[] | void>;

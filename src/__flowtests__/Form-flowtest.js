@@ -4,7 +4,7 @@
 import * as React from 'react';
 import { Button, View } from 'react-native';
 import { Form } from '..';
-import { TextInput as FieldTextInput } from '../bridge/components/react-native';
+import { FieldTextInput } from '../bridge/components/react-native';
 import { bridgeValidatejs } from '../bridge/validation/validatejs';
 
 const LoginScreen = () => (
