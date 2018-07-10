@@ -10,7 +10,7 @@ type Props = $ReadOnly<{
 
 const FieldTextInput = ({ field, ...rest }: Props) => (
   <TextInput
-    defaultValue={field.value}
+    defaultValue={field.value || ''}
     onChangeText={(original: string) => {
       let value = original;
 
