@@ -65,16 +65,27 @@ const DefaultsLoginScreen = () => (
 );
 <DefaultsLoginScreen />;
 
-const DefaultsBrokenLoginScreen = () => (
+const DefaultsBrokenUndefLoginScreen = () => (
   <DefaultsLoginForm
     // $FlowExpectedError
-    defaultValues={{ __username: 'anon' }}
+    defaultValues={{ username: 'anon', __password: 'foo' }}
     onSubmit={values => console.log(values)}
   >
     {() => <View />}
   </DefaultsLoginForm>
 );
-<DefaultsBrokenLoginScreen />;
+<DefaultsBrokenUndefLoginScreen />;
+
+const DefaultsBrokenMissingLoginScreen = () => (
+  <DefaultsLoginForm
+    // $FlowExpectedError
+    defaultValues={{ password: 'foo' }}
+    onSubmit={values => console.log(values)}
+  >
+    {() => <View />}
+  </DefaultsLoginForm>
+);
+<DefaultsBrokenMissingLoginScreen />;
 
 class PristineLoginForm extends TypedForm<{
   username?: string,

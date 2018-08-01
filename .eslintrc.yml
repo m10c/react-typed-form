@@ -20,6 +20,7 @@ rules:
   no-var: 2
   prefer-const: 2
 
+  flowtype/generic-spacing: 0
   flowtype/no-weak-types: 2
   flowtype/require-valid-file-annotation: [2, always]
   # flowtype/space-after-type-colon: 0

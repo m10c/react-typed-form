@@ -10,6 +10,7 @@ import type { TypedFormProp, Options } from './types';
 
 /*
 P = Props
+C = Wrapped component
 RP = Returned props (without injected)
 */
 
@@ -18,21 +19,33 @@ type MoreOptions<T> = $ReadOnly<{|
   defaultValues?: T,
 |}>;
 
+type InjectedProps<T> = { form: TypedFormProp<T> | void };
+
 export default function withForm<
   T: {},
   P: {},
-  RP: $Diff<P, { form: TypedFormProp<T> | void }>
+  C: ComponentType<P>
+  // Can't have RP in generics otherwise multiple HOC breaks
+  // https://github.com/facebook/flow/issues/6587
+  // RP: $Diff<React.ElementConfig<C>, { form: TypedFormProp<T> | void }>
 >(
-  optionsFn: MoreOptions<T> | ((ownProps: RP) => MoreOptions<T>)
+  // eslint-disable-next-line flowtype/space-after-type-colon
+  optionsFn:
+    | MoreOptions<T>
+    | ((
+        ownProps: $Diff<React.ElementConfig<C>, InjectedProps<T>>
+      ) => MoreOptions<T>)
+  // Really want React.ComponentType<RP> but Flow bug:
+  // https://github.com/facebook/flow/issues/6057
 ): (
-  Component: ComponentType<P> | React$StatelessFunctionalComponent<P>
-) => ComponentType<RP> {
+  Component: C
+) => Class<React.Component<$Diff<React.ElementConfig<C>, InjectedProps<T>>>> {
   return function(Component) {
     const Wrapper = props => {
       const options =
         typeof optionsFn === 'object' ? optionsFn : optionsFn(props);
       return (
-        // $FlowFixMe <0.71.0
+        // $FlowFixMe <0.71.0 Broken exact object spread
         <TypedForm {...options}>
           {/**/}
           {form => <Component form={form} {...props} />}
@@ -42,6 +55,6 @@ export default function withForm<
 
     Wrapper.displayName = wrapDisplayName(Component, 'withForm');
 
-    return Wrapper;
+    return (Wrapper: any); // eslint-disable-line flowtype/no-weak-types
   };
 }

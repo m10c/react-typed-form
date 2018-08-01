@@ -58,7 +58,6 @@ class EnhancedValidatejs extends React.PureComponent<{}> {
         {({ getFieldProps, handleSubmit }) => (
           <View>
             <FieldTextInput field={getFieldProps('username')} />
-            {/* $FlowExpectedError */}
             <FieldTextInput field={getFieldProps('password')} secureTextEntry />
             <FieldTextInputNullable
               field={getFieldProps('password')}
