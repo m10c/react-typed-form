@@ -4,7 +4,10 @@
 import * as React from 'react';
 import { Button, View } from 'react-native';
 import { Form } from '..';
-import { FieldTextInput } from '../bridge/components/react-native';
+import {
+  FieldTextInput,
+  FieldTextInputNullable,
+} from '../bridge/components/react-native';
 import { bridgeValidatejs } from '../bridge/validation/validatejs';
 
 const LoginScreen = () => (
@@ -56,6 +59,10 @@ class EnhancedValidatejs extends React.PureComponent<{}> {
           <View>
             <FieldTextInput field={getFieldProps('username')} />
             <FieldTextInput field={getFieldProps('password')} secureTextEntry />
+            <FieldTextInputNullable
+              field={getFieldProps('password')}
+              secureTextEntry
+            />
             <Button title="Submit" onPress={handleSubmit} />
           </View>
         )}

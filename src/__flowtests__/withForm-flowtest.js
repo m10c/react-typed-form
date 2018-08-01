@@ -33,8 +33,9 @@ const LoginForm = ({
 <LoginForm foo={1} />;
 
 const EnhancedSimple = withForm({
-  onSubmit: values => {
+  onSubmit: (values: LoginData) => {
     console.log(values.username);
+    // $FlowExpectedError
     console.log(values.invalid);
   },
 })(LoginForm);
