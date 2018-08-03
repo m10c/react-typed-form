@@ -71,4 +71,7 @@ class EnhancedValidatejs extends React.PureComponent<{}> {
   }
 }
 
-<EnhancedValidatejs />;
+// Caused babel error when not in function for some reason
+() => {
+  <EnhancedValidatejs />;
+};
