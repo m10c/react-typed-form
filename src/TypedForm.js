@@ -75,8 +75,9 @@ export default class Form<T: {}> extends React.PureComponent<
       value = pristine[field];
     }
 
-    // Add spaces to the label
-    const label = field.replace(/([a-z])([A-Z])/g, '$1 $2');
+    // Add spaces and capitalize for label
+    let label = field.replace(/([a-z])([A-Z])/g, '$1 $2');
+    label = label.charAt(0).toUpperCase() + label.slice(1);
 
     return {
       name: field,
