@@ -100,12 +100,12 @@ export default class Form<T: {}> extends React.PureComponent<
         this.setState({ loading: value });
       },
       addError: (field, error) => {
-        this.setState({
+        this.setState(state => ({
           lastErrors: {
-            ...lastErrors,
-            [field]: [...(lastErrors[field] || []), error],
+            ...state.lastErrors,
+            [field]: [...(state.lastErrors[field] || []), error],
           },
-        });
+        }));
       },
       formErrorList: lastErrors._form || [],
     };
