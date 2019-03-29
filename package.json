@@ -13,8 +13,8 @@
   ],
   "scripts": {
     "build": "npm run build:commonjs && npm run build:es",
-    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib && cp src/index.js.flow lib",
-    "build:es": "cross-env BABEL_ENV=es babel src --out-dir es && cp src/index.js.flow es",
+    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib && cp src/_index.js.flow lib/index.js.flow",
+    "build:es": "cross-env BABEL_ENV=es babel src --out-dir es && cp src/_index.js.flow es/index.js.flow",
     "eslint": "eslint src/**/*.js",
     "flow": "flow || exit 0",
     "prettier": "prettier --write \"src/**/*.js\"",
