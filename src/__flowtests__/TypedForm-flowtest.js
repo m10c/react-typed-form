@@ -8,14 +8,16 @@ import { FieldSwitch, FieldTextInput } from '../bridge/components/react-native';
 
 import type { $Optional } from '..';
 
-class LoginForm extends TypedForm<{|
+type FormShape = {|
   username?: string,
   password?: string,
-|}> {}
+|};
+
+class LoginForm extends TypedForm<FormShape> {}
 
 const LoginScreen = () => (
   <LoginForm
-    onSubmit={values => {
+    onSubmit={(values: FormShape) => {
       (values.username: ?string);
       // $FlowExpectedError
       (values.username: string);
@@ -25,12 +27,12 @@ const LoginScreen = () => (
       (values.noexist: string);
     }}
   >
-    {({ getFieldProps, handleSubmit }) => (
+    {({ getField, handleSubmit }) => (
       <View>
-        <FieldTextInput field={getFieldProps('username')} />
-        <FieldTextInput field={getFieldProps('password')} secureTextEntry />
+        <FieldTextInput field={getField('username')} />
+        <FieldTextInput field={getField('password')} secureTextEntry />
         {/* $FlowExpectedError */}
-        <FieldTextInput field={getFieldProps('noexist')} />
+        <FieldTextInput field={getField('noexist')} />
         <Button title="Submit" onPress={handleSubmit} />
       </View>
     )}
@@ -54,10 +56,10 @@ const DefaultsLoginScreen = () => (
       (values.password: string);
     }}
   >
-    {({ getFieldProps, handleSubmit }) => (
+    {({ getField, handleSubmit }) => (
       <View>
-        <FieldTextInput field={getFieldProps('username')} />
-        <FieldTextInput field={getFieldProps('password')} secureTextEntry />
+        <FieldTextInput field={getField('username')} />
+        <FieldTextInput field={getField('password')} secureTextEntry />
         <Button title="Submit" onPress={handleSubmit} />
       </View>
     )}
@@ -115,11 +117,11 @@ const PristineModelLoginScreen = ({ user }: { user: User }) => (
     pristineValues={user}
     onSubmit={values => console.log(values)}
   >
-    {({ getFieldProps }) => (
+    {({ getField }) => (
       <View>
-        <FieldTextInput field={getFieldProps('username')} />
-        <FieldTextInput field={getFieldProps('password')} secureTextEntry />
-        <FieldSwitch field={getFieldProps('enabled')} />
+        <FieldTextInput field={getField('username')} />
+        <FieldTextInput field={getField('password')} secureTextEntry />
+        <FieldSwitch field={getField('enabled')} />
       </View>
     )}
   </PristineModelLoginForm>

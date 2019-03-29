@@ -12,10 +12,10 @@ import { bridgeValidatejs } from '../bridge/validation/validatejs';
 
 const LoginScreen = () => (
   <Form onSubmit={values => console.log(values)}>
-    {({ getFieldProps, handleSubmit }) => (
+    {({ getField, handleSubmit }) => (
       <View>
-        <FieldTextInput field={getFieldProps('username')} />
-        <FieldTextInput field={getFieldProps('password')} secureTextEntry />
+        <FieldTextInput field={getField('username')} />
+        <FieldTextInput field={getField('password')} secureTextEntry />
         <Button title="Submit" onPress={handleSubmit} />
       </View>
     )}
@@ -27,11 +27,11 @@ const LoginScreen = () => (
 const LoginScreenInvalid = () => (
   <Form onSubmit={values => console.log(values)}>
     {/* $FlowExpectedError */}
-    {({ getFieldProps, handleSubmit, invalidProp }) => (
+    {({ getField, handleSubmit, invalidProp }) => (
       <View>
         {invalidProp}
-        <FieldTextInput field={getFieldProps('username')} />
-        <FieldTextInput field={getFieldProps('password')} secureTextEntry />
+        <FieldTextInput field={getField('username')} />
+        <FieldTextInput field={getField('password')} secureTextEntry />
         <Button title="Submit" onPress={handleSubmit} />
       </View>
     )}
@@ -55,12 +55,12 @@ class EnhancedValidatejs extends React.PureComponent<{}> {
         })}
         onSubmit={this.onSubmit}
       >
-        {({ getFieldProps, handleSubmit }) => (
+        {({ getField, handleSubmit }) => (
           <View>
-            <FieldTextInput field={getFieldProps('username')} />
-            <FieldTextInput field={getFieldProps('password')} secureTextEntry />
+            <FieldTextInput field={getField('username')} />
+            <FieldTextInput field={getField('password')} secureTextEntry />
             <FieldTextInputNullable
-              field={getFieldProps('password')}
+              field={getField('password')}
               secureTextEntry
             />
             <Button title="Submit" onPress={handleSubmit} />

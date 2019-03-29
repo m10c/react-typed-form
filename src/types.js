@@ -20,21 +20,25 @@ export type Options<T> = $ReadOnly<{|
   onSubmit: (values: T, form: TypedFormProp<T>) => void | Promise<void>,
 
   // Optional
+  defaultValues?: T,
   pristineValues?: $Shape<T>, // Pristine values don't count as changes
   validate?: (values: T) => FormErrors<T>,
   validateOnChange?: boolean,
 |}>;
 
 export type TypedFormProp<T> = $ReadOnly<{|
-  getFieldProps: GetFieldProps<T>,
-  handleSubmit: () => void,
+  getField: GetField<T>,
+  handleSubmit: () => Promise<boolean>,
   isLoading: boolean,
   setLoading: boolean => void,
   addError: (field: $Keys<ErrorFields<T>>, error: string) => void,
   formErrorList: string[],
+  // New for 0.2
+  values: T,
+  reset: () => void,
 |}>;
 
-export type TypedFieldProps<FTOut, FTIn = FTOut | void> = $ReadOnly<{|
+export type TypedFieldProp<FTOut, FTIn = FTOut | void> = $ReadOnly<{|
   name: string,
   label: string,
   value: FTIn,
@@ -44,8 +48,8 @@ export type TypedFieldProps<FTOut, FTIn = FTOut | void> = $ReadOnly<{|
   isValid?: boolean,
 |}>;
 
-type GetFieldProps<T> = <FK: $Keys<T>, FT: $ElementType<T, FK>>(
+type GetField<T> = <FK: $Keys<T>, FT: $ElementType<T, FK>>(
   field: FK
-) => TypedFieldProps<FT>;
+) => TypedFieldProp<FT>;
 
 export type FormErrors<T: {}> = $ObjMap<ErrorFields<T>, () => string[] | void>;

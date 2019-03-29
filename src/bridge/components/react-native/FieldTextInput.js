@@ -2,10 +2,10 @@
 
 import * as React from 'react';
 import { TextInput } from 'react-native';
-import type { TypedFieldProps } from '../../..';
+import type { TypedFieldProp } from '../../..';
 
 type Props = $ReadOnly<{
-  field: TypedFieldProps<string>,
+  field: TypedFieldProp<string>,
   /* $ReadOnly<{
     handleValueChange: (value: string) => void,
   }>, */

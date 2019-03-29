@@ -2,10 +2,10 @@
 
 import * as React from 'react';
 import { Switch } from 'react-native';
-import type { TypedFieldProps } from '../../..';
+import type { TypedFieldProp } from '../../..';
 
 type Props = $ReadOnly<{
-  field: TypedFieldProps<boolean>,
+  field: TypedFieldProp<boolean>,
 }>;
 
 const FieldSwitch = ({ field, ...rest }: Props) => (

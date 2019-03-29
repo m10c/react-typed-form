@@ -20,11 +20,11 @@ type Props = $ReadOnly<{|
 |}>;
 
 const LoginForm = ({
-  form: { getFieldProps, handleSubmit, isLoading },
+  form: { getField, handleSubmit, isLoading },
 }: Props) => (
   <View>
-    <FieldTextInput field={getFieldProps('username')} />
-    <FieldTextInput field={getFieldProps('password')} secureTextEntry />
+    <FieldTextInput field={getField('username')} />
+    <FieldTextInput field={getField('password')} secureTextEntry />
     <Button title="Submit" disabled={isLoading} onPress={handleSubmit} />
   </View>
 );

@@ -14,11 +14,6 @@ C = Wrapped component
 RP = Returned props (without injected)
 */
 
-type MoreOptions<T> = $ReadOnly<{|
-  ...Options<T>,
-  defaultValues?: T,
-|}>;
-
 type InjectedProps<T> = { form: TypedFormProp<T> | void };
 
 export default function withForm<
@@ -31,10 +26,10 @@ export default function withForm<
 >(
   // eslint-disable-next-line flowtype/space-after-type-colon
   optionsFn:
-    | MoreOptions<T>
+    | Options<T>
     | ((
         ownProps: $Diff<React.ElementConfig<C>, InjectedProps<T>>
-      ) => MoreOptions<T>)
+      ) => Options<T>)
   // Really want React.ComponentType<RP> but Flow bug:
   // https://github.com/facebook/flow/issues/6057
 ): (
