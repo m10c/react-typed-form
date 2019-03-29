@@ -1,6 +1,6 @@
 {
   "name": "react-typed-form",
-  "version": "0.2.0-alpha.1",
+  "version": "0.2.0-alpha.2",
   "author": "James Isaac <james.isaac@gmail.com>",
   "license": "MIT",
   "main": "lib/index.js",
