@@ -1,4 +1,4 @@
-## Unreleased
+## 0.2.1
 
 - Add exported TypeScript type definitions (`index.d.ts`).
 
