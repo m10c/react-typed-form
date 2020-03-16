@@ -1,4 +1,4 @@
-## 0.2.1
+## 0.2.2
 
 - Add exported TypeScript type definitions (`index.d.ts`).
 

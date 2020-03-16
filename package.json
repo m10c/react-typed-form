@@ -9,7 +9,7 @@
     "es",
     "lib",
     "src",
-    "README.md"
+    "index.d.ts"
   ],
   "scripts": {
     "build": "npm run build:commonjs && npm run build:es",
