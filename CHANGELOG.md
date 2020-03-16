@@ -1,3 +1,7 @@
+## Unreleased
+
+- Add exported TypeScript type definitions (`index.d.ts`).
+
 ## 0.2.0
 
 - **BC Break**: `getFieldProps` renamed to `getField`.

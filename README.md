@@ -8,7 +8,7 @@
 
 - Multiple APIs: **Hooks** (recommended), **Render Props** and **HOC**.
 - Uses React's _local state_ to hold form state, so as not to clutter up global state (e.g. Redux).
-- Type-safe submitted form data with Flow (TypeScript support coming soon).
+- Type-safe submitted form data with **Flow** and **TypeScript**.
 - Support for React DOM and React Native out of the box.
 - Many useful features including validation, error messages, loading/disabled state, and more.
 
