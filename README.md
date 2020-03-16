@@ -37,7 +37,7 @@ import { useForm } from 'react-typed-form';
 import { FieldTextInput } from 'react-typed-form/bridge/components/react-native';
 
 export default function MyPage() {
-  const { fieldProp, handleSubmit } = useForm({
+  const { getField, handleSubmit } = useForm({
     onSubmit: values => {
       // Do something with your values
       console.log(values);
@@ -46,7 +46,7 @@ export default function MyPage() {
 
   return (
     <View>
-      <FieldTextInput field={fieldProp('name')} />
+      <FieldTextInput field={getField('name')} />
       <Button title="Submit" onPress={handleSubmit} />
     </View>
   );
@@ -103,7 +103,7 @@ type FormShape = {|
 
 export default function MyPage() {
   const {
-    fieldProp,
+    getField,
     formErrorList,
     handleSubmit,
     isLoading
@@ -144,15 +144,15 @@ export default function MyPage() {
 
       {/* If you're going down the type-safe route, you'll need separate fields
           for nullable vs non-nullable values */}
-      <FieldTextRequired field={fieldProp('name')} />
+      <FieldTextRequired field={getField('name')} />
 
       {/* Override the auto-generated label */}
-      <FieldText field={{ ...fieldProp('bio'), label: 'About you' }} />
+      <FieldText field={{ ...getField('bio'), label: 'About you' }} />
 
-      <FieldText field={fieldProp('phone')} />
+      <FieldText field={getField('phone')} />
 
       {/* Create custom fields for any behaviour or types of values... */}
-      <FieldSelect choices={COUNTRIES} field={fieldProp('country')} />
+      <FieldSelect choices={COUNTRIES} field={getField('country')} />
 
       <button type="submit" disabled={isLoading}>Submit</button>
     </form>
