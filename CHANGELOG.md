@@ -1,4 +1,4 @@
-## 0.2.0 (unreleased)
+## 0.2.0
 
 - **BC Break**: `getFieldProps` renamed to `getField`.
 - **BC Break**: minimum version of supported dependencies bumped, most notably React now >=16.8 (for Hooks support).

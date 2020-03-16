@@ -10,7 +10,7 @@
 - Uses React's _local state_ to hold form state, so as not to clutter up global state (e.g. Redux).
 - Type-safe submitted form data with Flow (TypeScript support coming soon).
 - Support for React DOM and React Native out of the box.
-- Many useful features including validation, error messages, loading (disabled) state, and more.
+- Many useful features including validation, error messages, loading/disabled state, and more.
 
 ## Setup
 
@@ -23,7 +23,7 @@ $ yarn add react-typed-form
 
 ## Usage
 
-### Hooks / React Native (Minimal)
+### Minimal example: Hooks / React Native
 
 Usage can be extremely minimal.
 In this example, all you're really doing is bringing your form state and submission logic into one place.
@@ -53,7 +53,7 @@ export default function MyPage() {
 }
 ```
 
-### Hooks / React DOM (feature rich)
+### Feature-rich example: Hooks / React DOM
 
 The example below brings into play many more features of the library:
 
