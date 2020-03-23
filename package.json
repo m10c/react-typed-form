@@ -3,6 +3,13 @@
   "version": "0.2.2",
   "author": "James Isaac <james.isaac@gmail.com>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/m10c/react-typed-form/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/m10c/react-typed-form.git"
+  },
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
