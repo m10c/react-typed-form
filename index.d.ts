@@ -7,10 +7,10 @@ import * as React from 'react';
 export type ErrorFields<T> = T & { _form?: never };
 
 export type FormErrors<T extends {}> = Readonly<
-  { [P in keyof T]: string[] | void }
+  { [P in keyof T]: string[] | undefined }
 >;
 
-export type TypedFieldProp<FTOut, FTIn = FTOut | void> = Readonly<{
+export type TypedFieldProp<FTOut, FTIn = FTOut | undefined> = Readonly<{
   name: string;
   label: string;
   value: FTIn;

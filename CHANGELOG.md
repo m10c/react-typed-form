@@ -1,3 +1,7 @@
+## Unreleased
+
+- Fix usage of `void` in TS types (replace with `undefined`).
+
 ## 0.2.2
 
 - Add exported TypeScript type definitions (`index.d.ts`).
