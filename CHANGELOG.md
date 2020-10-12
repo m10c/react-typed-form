@@ -1,4 +1,4 @@
-## Unreleased
+## 0.2.3
 
 - Fix usage of `void` in TS types (replace with `undefined`).
 
