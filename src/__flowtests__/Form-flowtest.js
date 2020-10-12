@@ -2,22 +2,26 @@
 /* eslint-disable no-console */
 
 import * as React from 'react';
-import { Button, View } from 'react-native';
 import { Form } from '..';
 import {
-  FieldTextInput,
-  FieldTextInputNullable,
-} from '../bridge/components/react-native';
-import { bridgeValidatejs } from '../bridge/validation/validatejs';
+  FieldText,
+  FieldTextNullable,
+  createValidator,
+} from '../__tests__/samples';
 
 const LoginScreen = () => (
   <Form onSubmit={values => console.log(values)}>
     {({ getField, handleSubmit }) => (
-      <View>
-        <FieldTextInput field={getField('username')} />
-        <FieldTextInput field={getField('password')} secureTextEntry />
-        <Button title="Submit" onPress={handleSubmit} />
-      </View>
+      <form
+        onSubmit={ev => {
+          ev.preventDefault();
+          handleSubmit();
+        }}
+      >
+        <FieldText field={getField('username')} />
+        <FieldText field={getField('password')} secureTextEntry />
+        <input type="submit" onPress={handleSubmit} />
+      </form>
     )}
   </Form>
 );
@@ -28,12 +32,17 @@ const LoginScreenInvalid = () => (
   <Form onSubmit={values => console.log(values)}>
     {/* $FlowExpectedError */}
     {({ getField, handleSubmit, invalidProp }) => (
-      <View>
+      <form
+        onSubmit={ev => {
+          ev.preventDefault();
+          handleSubmit();
+        }}
+      >
         {invalidProp}
-        <FieldTextInput field={getField('username')} />
-        <FieldTextInput field={getField('password')} secureTextEntry />
-        <Button title="Submit" onPress={handleSubmit} />
-      </View>
+        <FieldText field={getField('username')} />
+        <FieldText field={getField('password')} secureTextEntry />
+        <input type="Submit" onPress={handleSubmit} />
+      </form>
     )}
   </Form>
 );
@@ -46,7 +55,7 @@ class EnhancedValidatejs extends React.PureComponent<{}> {
   render() {
     return (
       <Form
-        validate={bridgeValidatejs({
+        validate={createValidator({
           username: {
             presence: { allowEmpty: false },
             length: { minimum: 2, maximum: 12 },
@@ -56,15 +65,17 @@ class EnhancedValidatejs extends React.PureComponent<{}> {
         onSubmit={this.onSubmit}
       >
         {({ getField, handleSubmit }) => (
-          <View>
-            <FieldTextInput field={getField('username')} />
-            <FieldTextInput field={getField('password')} secureTextEntry />
-            <FieldTextInputNullable
-              field={getField('password')}
-              secureTextEntry
-            />
-            <Button title="Submit" onPress={handleSubmit} />
-          </View>
+          <form
+            onSubmit={ev => {
+              ev.preventDefault();
+              handleSubmit();
+            }}
+          >
+            <FieldText field={getField('username')} />
+            <FieldText field={getField('password')} secureTextEntry />
+            <FieldTextNullable field={getField('password')} secureTextEntry />
+            <input type="submit" onPress={handleSubmit} />
+          </form>
         )}
       </Form>
     );

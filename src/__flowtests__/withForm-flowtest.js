@@ -2,12 +2,10 @@
 /* eslint-disable no-console */
 
 import * as React from 'react';
-import { Button, View } from 'react-native';
-import { withForm } from '../';
-import { FieldTextInput } from '../bridge/components/react-native';
-import { bridgeValidatejs } from '../bridge/validation/validatejs';
+import { withForm } from '..';
+import { FieldText, createValidator } from '../__tests__/samples';
 
-import type { TypedFormProp } from '../';
+import type { TypedFormProp } from '..';
 
 type LoginData = {|
   username?: string,
@@ -19,14 +17,12 @@ type Props = $ReadOnly<{|
   form: TypedFormProp<LoginData>,
 |}>;
 
-const LoginForm = ({
-  form: { getField, handleSubmit, isLoading },
-}: Props) => (
-  <View>
-    <FieldTextInput field={getField('username')} />
-    <FieldTextInput field={getField('password')} secureTextEntry />
-    <Button title="Submit" disabled={isLoading} onPress={handleSubmit} />
-  </View>
+const LoginForm = ({ form: { getField, handleSubmit, isLoading } }: Props) => (
+  <form>
+    <FieldText field={getField('username')} />
+    <FieldText field={getField('password')} secureTextEntry />
+    <input type="submit" disabled={isLoading} onPress={handleSubmit} />
+  </form>
 );
 
 // $FlowExpectedError
@@ -71,7 +67,7 @@ const EnhancedOwnPropsInvalid = withForm(ownProps => ({
 
 const EnhancedValidatejs = withForm({
   onSubmit: values => console.log(values),
-  validate: bridgeValidatejs({
+  validate: createValidator({
     username: {
       presence: { allowEmpty: false },
       length: { minimum: 2, maximum: 12 },

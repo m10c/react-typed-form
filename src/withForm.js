@@ -40,7 +40,6 @@ export default function withForm<
       const options =
         typeof optionsFn === 'object' ? optionsFn : optionsFn(props);
       return (
-        // $FlowFixMe <0.71.0 Broken exact object spread
         <TypedForm {...options}>
           {/**/}
           {form => <Component form={form} {...props} />}

@@ -2,9 +2,8 @@
 /* eslint-disable no-console */
 
 import * as React from 'react';
-import { Button, View } from 'react-native';
 import { TypedForm } from '..';
-import { FieldSwitch, FieldTextInput } from '../bridge/components/react-native';
+import { FieldCheckbox, FieldText } from '../__tests__/samples';
 
 import type { $Optional } from '..';
 
@@ -28,13 +27,18 @@ const LoginScreen = () => (
     }}
   >
     {({ getField, handleSubmit }) => (
-      <View>
-        <FieldTextInput field={getField('username')} />
-        <FieldTextInput field={getField('password')} secureTextEntry />
+      <form
+        onSubmit={ev => {
+          ev.preventDefault();
+          handleSubmit();
+        }}
+      >
+        <FieldText field={getField('username')} />
+        <FieldText field={getField('password')} secureTextEntry />
         {/* $FlowExpectedError */}
-        <FieldTextInput field={getField('noexist')} />
-        <Button title="Submit" onPress={handleSubmit} />
-      </View>
+        <FieldText field={getField('noexist')} />
+        <input type="submit" onPress={handleSubmit} />
+      </form>
     )}
   </LoginForm>
 );
@@ -57,11 +61,16 @@ const DefaultsLoginScreen = () => (
     }}
   >
     {({ getField, handleSubmit }) => (
-      <View>
-        <FieldTextInput field={getField('username')} />
-        <FieldTextInput field={getField('password')} secureTextEntry />
-        <Button title="Submit" onPress={handleSubmit} />
-      </View>
+      <form
+        onSubmit={ev => {
+          ev.preventDefault();
+          handleSubmit();
+        }}
+      >
+        <FieldText field={getField('username')} />
+        <FieldText field={getField('password')} secureTextEntry />
+        <input type="submit" onPress={handleSubmit} />
+      </form>
     )}
   </DefaultsLoginForm>
 );
@@ -73,7 +82,7 @@ const DefaultsBrokenUndefLoginScreen = () => (
     defaultValues={{ username: 'anon', __password: 'foo' }}
     onSubmit={values => console.log(values)}
   >
-    {() => <View />}
+    {() => <form />}
   </DefaultsLoginForm>
 );
 <DefaultsBrokenUndefLoginScreen />;
@@ -84,7 +93,7 @@ const DefaultsBrokenMissingLoginScreen = () => (
     defaultValues={{ password: 'foo' }}
     onSubmit={values => console.log(values)}
   >
-    {() => <View />}
+    {() => <form />}
   </DefaultsLoginForm>
 );
 <DefaultsBrokenMissingLoginScreen />;
@@ -98,7 +107,7 @@ const PristineLoginScreen = () => (
     pristineValues={{ username: 'anon' }}
     onSubmit={values => console.log(values)}
   >
-    {() => <View />}
+    {() => <form />}
   </PristineLoginForm>
 );
 <PristineLoginScreen />;
@@ -117,12 +126,17 @@ const PristineModelLoginScreen = ({ user }: { user: User }) => (
     pristineValues={user}
     onSubmit={values => console.log(values)}
   >
-    {({ getField }) => (
-      <View>
-        <FieldTextInput field={getField('username')} />
-        <FieldTextInput field={getField('password')} secureTextEntry />
-        <FieldSwitch field={getField('enabled')} />
-      </View>
+    {({ getField, handleSubmit }) => (
+      <form
+        onSubmit={ev => {
+          ev.preventDefault();
+          handleSubmit();
+        }}
+      >
+        <FieldText field={getField('username')} />
+        <FieldText field={getField('password')} secureTextEntry />
+        <FieldCheckbox field={getField('enabled')} />
+      </form>
     )}
   </PristineModelLoginForm>
 );
@@ -136,7 +150,7 @@ const PristineBrokenLoginScreen = () => (
     pristineValues={{ username: 2, other: 'yes' }}
     onSubmit={values => console.log(values)}
   >
-    {() => <View />}
+    {() => <form />}
   </PristineLoginForm>
 );
 <PristineBrokenLoginScreen />;
