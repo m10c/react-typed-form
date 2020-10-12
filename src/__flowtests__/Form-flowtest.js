@@ -3,17 +3,13 @@
 
 import * as React from 'react';
 import { Form } from '..';
-import {
-  FieldText,
-  FieldTextNullable,
-  createValidator,
-} from '../__tests__/samples';
+import { FieldText, FieldTextNullable, createValidator } from '../__samples__';
 
 const LoginScreen = () => (
-  <Form onSubmit={values => console.log(values)}>
+  <Form onSubmit={(values) => console.log(values)}>
     {({ getField, handleSubmit }) => (
       <form
-        onSubmit={ev => {
+        onSubmit={(ev) => {
           ev.preventDefault();
           handleSubmit();
         }}
@@ -29,11 +25,11 @@ const LoginScreen = () => (
 <LoginScreen />;
 
 const LoginScreenInvalid = () => (
-  <Form onSubmit={values => console.log(values)}>
+  <Form onSubmit={(values) => console.log(values)}>
     {/* $FlowExpectedError */}
     {({ getField, handleSubmit, invalidProp }) => (
       <form
-        onSubmit={ev => {
+        onSubmit={(ev) => {
           ev.preventDefault();
           handleSubmit();
         }}
@@ -50,7 +46,7 @@ const LoginScreenInvalid = () => (
 <LoginScreenInvalid />;
 
 class EnhancedValidatejs extends React.PureComponent<{}> {
-  onSubmit = values => console.log(values);
+  onSubmit = (values) => console.log(values);
 
   render() {
     return (
@@ -66,7 +62,7 @@ class EnhancedValidatejs extends React.PureComponent<{}> {
       >
         {({ getField, handleSubmit }) => (
           <form
-            onSubmit={ev => {
+            onSubmit={(ev) => {
               ev.preventDefault();
               handleSubmit();
             }}

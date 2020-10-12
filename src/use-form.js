@@ -39,7 +39,7 @@ export default function useForm<T: {}>({
   ): void {
     // Callback style to avoid race condition
     // $FlowFixMe
-    setValues(prevValues => ({ ...prevValues, [name]: value }));
+    setValues((prevValues) => ({ ...prevValues, [name]: value }));
     // TODO: Doesn't depend on new values properly, might need a reducer
     setInvalid(determineInvalid());
   }
@@ -96,7 +96,7 @@ export default function useForm<T: {}>({
       setLoading,
       addError: (name, error) => {
         // $FlowFixMe
-        setLastErrors(prevState => ({
+        setLastErrors((prevState) => ({
           ...prevState,
           [name]: [...(prevState[name] || []), error],
         }));

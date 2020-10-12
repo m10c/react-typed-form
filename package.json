@@ -22,34 +22,30 @@
     "build": "npm run build:commonjs && npm run build:es",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib && cp src/_index.js.flow lib/index.js.flow",
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir es && cp src/_index.js.flow es/index.js.flow",
-    "eslint": "eslint src/**/*.js",
-    "flow": "flow || exit 0",
-    "prettier": "prettier --write \"src/**/*.js\"",
-    "test": "yarn run flow && yarn run eslint",
+    "lint": "eslint src/**/*.js",
+    "pretty": "prettier --write \"src/**/*.js\"",
+    "test": "yarn flow && yarn run lint",
     "version": "npm run build"
   },
   "dependencies": {
-    "recompose": "^0.27.1"
+    "recompose": "^0.30.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.4.0",
-    "@babel/plugin-external-helpers": "^7.2.0",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.4.0",
     "@babel/preset-env": "^7.4.2",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.1",
-    "cross-env": "^5.2.0",
-    "eslint": "^4.19.1",
-    "eslint-plugin-flowtype": "^2.47.1",
-    "eslint-plugin-jest": "^21.17.0",
+    "cross-env": "^7.0.2",
+    "eslint": "^7.11.0",
+    "eslint-plugin-flowtype": "^5.2.0",
     "eslint-plugin-react": "^7.8.2",
-    "flow-bin": "^0.92.0",
-    "prettier": "^1.16.1",
-    "react": "^16.8.0",
-    "react-test-renderer": "16.3.1"
+    "flow-bin": "^0.135.0",
+    "prettier": "^2.1.2",
+    "react": "^16.8.0"
   },
   "peerDependencies": {
     "react": "*"

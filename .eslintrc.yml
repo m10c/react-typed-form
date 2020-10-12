@@ -8,11 +8,14 @@ env:
 extends:
   - eslint:recommended
   - plugin:flowtype/recommended
-  - plugin:jest/recommended
   - plugin:react/recommended
   
 globals:
   console: false
+
+settings:
+  react:
+    version: detect
 
 rules:
   no-param-reassign: 2

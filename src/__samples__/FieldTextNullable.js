@@ -1,21 +1,18 @@
 // @flow
 
 import * as React from 'react';
-import type { TypedFieldProp } from '../..';
+import type { TypedFieldProp } from '..';
 
 type Props = $ReadOnly<{
   field: TypedFieldProp<string | null>,
 }>;
 
-export default function FieldTextNullable({
-  field,
-  ...rest
-}: Props): React.Node {
+export default function FieldTextNullable({ field }: Props): React.Node {
   return (
     <input
       type="text"
       value={field.value}
-      onChange={ev => {
+      onChange={(ev) => {
         let { value } = ev.target;
 
         if (value.trim() === '') {
@@ -24,7 +21,6 @@ export default function FieldTextNullable({
 
         return field.handleValueChange(value);
       }}
-      {...rest}
     />
   );
 }

@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 import { useForm } from '..';
-import { FieldCheckbox, FieldText } from '../__tests__/samples';
+import { FieldCheckbox, FieldText } from '../__samples__';
 
 import type { $Optional } from '..';
 
@@ -14,7 +14,7 @@ type Shape = {|
 
 function Screen() {
   const { getField, handleSubmit } = useForm<Shape>({
-    onSubmit: values => {
+    onSubmit: (values) => {
       (values.username: ?string);
       // $FlowExpectedError
       (values.username: string);
@@ -44,7 +44,7 @@ type DefaultsShape = {|
 function DefaultsScreen() {
   const { getField, handleSubmit } = useForm<DefaultsShape>({
     defaultValues: { username: 'anon' },
-    onSubmit: values => {
+    onSubmit: (values) => {
       (values.username: string);
       // $FlowExpectedError
       (values.password: string);
@@ -61,10 +61,10 @@ function DefaultsScreen() {
 <DefaultsScreen />;
 
 function DefaultsBrokenUndefScreen() {
+  // $FlowExpectedError[prop-missing]
   useForm<DefaultsShape>({
-    // $FlowExpectedError
     defaultValues: { username: 'anon', __password: 'foo' },
-    onSubmit: values => console.log(values),
+    onSubmit: (values) => console.log(values),
   });
   return <form />;
 }
@@ -74,7 +74,7 @@ function DefaultsBrokenMissingScreen() {
   useForm<DefaultsShape>({
     // $FlowExpectedError
     defaultValues: { password: 'foo' },
-    onSubmit: values => console.log(values),
+    onSubmit: (values) => console.log(values),
   });
   return <form />;
 }
@@ -88,7 +88,7 @@ type PristineShape = {
 function PristineScreen() {
   useForm<PristineShape>({
     pristineValues: { username: 'anon' },
-    onSubmit: values => console.log(values),
+    onSubmit: (values) => console.log(values),
   });
   return <form />;
 }
@@ -104,7 +104,7 @@ type User = {
 function PristineModelScreen({ user }: { user: User }) {
   const { getField } = useForm<$Optional<User>>({
     pristineValues: user,
-    onSubmit: values => console.log(values),
+    onSubmit: (values) => console.log(values),
   });
   return (
     <form>
@@ -119,10 +119,11 @@ function PristineModelScreen({ user }: { user: User }) {
 />;
 
 function PristineBrokenScreen() {
+  // $FlowExpectedError[prop-missing]
   useForm<$Optional<User>>({
-    // $FlowExpectedError
+    // $FlowExpectedError[incompatible-call]
     pristineValues: { username: 2, other: 'yes' },
-    onSubmit: values => console.log(values),
+    onSubmit: (values) => console.log(values),
   });
   return <form />;
 }

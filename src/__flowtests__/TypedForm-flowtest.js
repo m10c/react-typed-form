@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 import { TypedForm } from '..';
-import { FieldCheckbox, FieldText } from '../__tests__/samples';
+import { FieldCheckbox, FieldText } from '../__samples__';
 
 import type { $Optional } from '..';
 
@@ -28,7 +28,7 @@ const LoginScreen = () => (
   >
     {({ getField, handleSubmit }) => (
       <form
-        onSubmit={ev => {
+        onSubmit={(ev) => {
           ev.preventDefault();
           handleSubmit();
         }}
@@ -54,7 +54,7 @@ const DefaultsLoginScreen = () => (
     defaultValues={{
       username: 'anon',
     }}
-    onSubmit={values => {
+    onSubmit={(values) => {
       (values.username: string);
       // $FlowExpectedError
       (values.password: string);
@@ -62,7 +62,7 @@ const DefaultsLoginScreen = () => (
   >
     {({ getField, handleSubmit }) => (
       <form
-        onSubmit={ev => {
+        onSubmit={(ev) => {
           ev.preventDefault();
           handleSubmit();
         }}
@@ -77,10 +77,10 @@ const DefaultsLoginScreen = () => (
 <DefaultsLoginScreen />;
 
 const DefaultsBrokenUndefLoginScreen = () => (
+  // $FlowExpectedError[prop-missing]
   <DefaultsLoginForm
-    // $FlowExpectedError
     defaultValues={{ username: 'anon', __password: 'foo' }}
-    onSubmit={values => console.log(values)}
+    onSubmit={(values) => console.log(values)}
   >
     {() => <form />}
   </DefaultsLoginForm>
@@ -91,7 +91,7 @@ const DefaultsBrokenMissingLoginScreen = () => (
   <DefaultsLoginForm
     // $FlowExpectedError
     defaultValues={{ password: 'foo' }}
-    onSubmit={values => console.log(values)}
+    onSubmit={(values) => console.log(values)}
   >
     {() => <form />}
   </DefaultsLoginForm>
@@ -105,7 +105,7 @@ class PristineLoginForm extends TypedForm<{
 const PristineLoginScreen = () => (
   <PristineLoginForm
     pristineValues={{ username: 'anon' }}
-    onSubmit={values => console.log(values)}
+    onSubmit={(values) => console.log(values)}
   >
     {() => <form />}
   </PristineLoginForm>
@@ -124,11 +124,11 @@ class PristineModelLoginForm extends TypedForm<$Optional<User>> {}
 const PristineModelLoginScreen = ({ user }: { user: User }) => (
   <PristineModelLoginForm
     pristineValues={user}
-    onSubmit={values => console.log(values)}
+    onSubmit={(values) => console.log(values)}
   >
     {({ getField, handleSubmit }) => (
       <form
-        onSubmit={ev => {
+        onSubmit={(ev) => {
           ev.preventDefault();
           handleSubmit();
         }}
@@ -145,10 +145,11 @@ const PristineModelLoginScreen = ({ user }: { user: User }) => (
 />;
 
 const PristineBrokenLoginScreen = () => (
+  // $FlowExpectedError[prop-missing]
   <PristineLoginForm
-    // $FlowExpectedError
+    // $FlowExpectedError[incompatible-type]
     pristineValues={{ username: 2, other: 'yes' }}
-    onSubmit={values => console.log(values)}
+    onSubmit={(values) => console.log(values)}
   >
     {() => <form />}
   </PristineLoginForm>

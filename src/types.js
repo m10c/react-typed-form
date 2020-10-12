@@ -55,7 +55,7 @@ export type TypedFormProp<T> = $ReadOnly<{|
   getField: GetField<T>,
   handleSubmit: () => Promise<boolean>,
   isLoading: boolean,
-  setLoading: boolean => void,
+  setLoading: (boolean) => void,
   addError: (field: $Keys<ErrorFields<T>>, error: string) => void,
   formErrorList: string[],
   // New for 0.2

@@ -35,14 +35,14 @@ export default function withForm<
 ): (
   Component: C
 ) => Class<React.Component<$Diff<React.ElementConfig<C>, InjectedProps<T>>>> {
-  return function(Component) {
-    const Wrapper = props => {
+  return function (Component) {
+    const Wrapper = (props) => {
       const options =
         typeof optionsFn === 'object' ? optionsFn : optionsFn(props);
       return (
         <TypedForm {...options}>
           {/**/}
-          {form => <Component form={form} {...props} />}
+          {(form) => <Component form={form} {...props} />}
         </TypedForm>
       );
     };

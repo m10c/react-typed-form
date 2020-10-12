@@ -16,7 +16,7 @@ function WithHooks<T: {}>({ children, ...options }: Props<T>) {
 }
 
 export default class TypedForm<T: {}> extends React.PureComponent<Props<T>> {
-  render() {
+  render(): React.Node {
     return <WithHooks {...this.props} />;
   }
 }

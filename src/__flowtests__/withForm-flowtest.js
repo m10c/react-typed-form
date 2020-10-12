@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 import { withForm } from '..';
-import { FieldText, createValidator } from '../__tests__/samples';
+import { FieldText, createValidator } from '../__samples__';
 
 import type { TypedFormProp } from '..';
 
@@ -40,13 +40,13 @@ const EnhancedSimple = withForm({
 
 // $FlowExpectedError
 const EnhancedInvalid = withForm({
-  onSubmit: values => console.log(values),
+  onSubmit: (values) => console.log(values),
   foo: 'bar',
 })(LoginForm);
 
 <EnhancedInvalid foo={1} />;
 
-const EnhancedOwnProps = withForm(ownProps => ({
+const EnhancedOwnProps = withForm((ownProps) => ({
   onSubmit: () => {
     ownProps.foo;
   },
@@ -56,7 +56,7 @@ const EnhancedOwnProps = withForm(ownProps => ({
 // $FlowExpectedError
 <EnhancedOwnProps bar={1} />;
 
-const EnhancedOwnPropsInvalid = withForm(ownProps => ({
+const EnhancedOwnPropsInvalid = withForm((ownProps) => ({
   onSubmit: () => {
     // $FlowExpectedError
     ownProps.bar;
@@ -66,7 +66,7 @@ const EnhancedOwnPropsInvalid = withForm(ownProps => ({
 <EnhancedOwnPropsInvalid foo={1} />;
 
 const EnhancedValidatejs = withForm({
-  onSubmit: values => console.log(values),
+  onSubmit: (values) => console.log(values),
   validate: createValidator({
     username: {
       presence: { allowEmpty: false },
