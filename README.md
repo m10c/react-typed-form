@@ -1,7 +1,8 @@
 # react-typed-form
 
 [![npm version](https://img.shields.io/npm/v/react-typed-form.svg)](https://www.npmjs.com/package/react-typed-form)
-[![license](https://img.shields.io/github/license/jamesisaac/react-typed-form.svg)](https://opensource.org/licenses/MIT)
+[![Circle CI Status](https://circleci.com/gh/m10c/react-typed-form.svg?style=shield)](https://circleci.com/gh/m10c/react-typed-form)
+[![license](https://img.shields.io/github/license/m10c/react-typed-form.svg)](https://opensource.org/licenses/MIT)
 [![npm downloads](https://img.shields.io/npm/dm/react-typed-form.svg)](https://www.npmjs.com/package/react-typed-form)
 
 > A simple, flexible and type-safe form state management library for React.
@@ -38,7 +39,7 @@ import { FieldTextInput } from 'react-typed-form/bridge/components/react-native'
 
 export default function MyPage() {
   const { getField, handleSubmit } = useForm({
-    onSubmit: values => {
+    onSubmit: (values) => {
       // Do something with your values
       console.log(values);
     },
