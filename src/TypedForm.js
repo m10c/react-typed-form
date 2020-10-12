@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import useForm from './useForm';
+import useForm from './use-form';
 
 import type { Options, TypedFormProp } from './types';
 
