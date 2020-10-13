@@ -51,7 +51,7 @@ class EnhancedValidatejs extends React.PureComponent<{}> {
   render() {
     return (
       <Form
-        validate={createValidator({
+        validator={createValidator({
           username: {
             presence: { allowEmpty: false },
             length: { minimum: 2, maximum: 12 },

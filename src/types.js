@@ -39,9 +39,12 @@ export type TypedFieldProp<FTOut, FTIn = FTOut | void> = $ReadOnly<{|
   label: string,
   value: FTIn,
   handleValueChange: (value: FTOut) => void,
+  // These are optional to make it easier for users to manually create their
+  // own code compatible with the TypedFieldProp API.
+  isDirty?: boolean,
   isLoading?: boolean,
+  errorList?: string[],
   lastErrorList?: string[],
-  isValid?: boolean,
 |}>;
 
 type GetField<T> = <FK: $Keys<T>, FT: $ElementType<T, FK>>(
@@ -56,11 +59,14 @@ export type TypedFormProp<T> = $ReadOnly<{|
   handleSubmit: () => Promise<boolean>,
   isLoading: boolean,
   setLoading: (boolean) => void,
-  addError: (field: $Keys<ErrorFields<T>>, error: string) => void,
+  addSubmitError: (field: $Keys<ErrorFields<T>>, error: string) => void,
   formErrorList: string[],
   // New for 0.2
   values: T,
   reset: () => void,
+  // New for 0.3
+  errors: FormErrors<ErrorFields<T>>,
+  lastErrors: FormErrors<ErrorFields<T>>,
 |}>;
 
 /**
@@ -68,11 +74,15 @@ export type TypedFormProp<T> = $ReadOnly<{|
  */
 export type Options<T> = $ReadOnly<{|
   // Required
-  onSubmit: (values: T, form: TypedFormProp<T>) => void | Promise<void>,
+  onSubmit: (
+    values: T,
+    form: TypedFormProp<T>
+  ) => void | boolean | Promise<void> | Promise<boolean>,
 
   // Optional
   defaultValues?: T,
   pristineValues?: $Shape<T>, // Pristine values don't count as changes
-  validate?: (values: T) => FormErrors<T>,
-  validateOnChange?: boolean,
+  validator?: (values: T) => FormErrors<T>,
+  alwaysRevalidateOnChange?: boolean,
+  revalidateFields?: Array<$Keys<T>>,
 |}>;

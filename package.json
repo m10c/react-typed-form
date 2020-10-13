@@ -1,7 +1,7 @@
 {
   "name": "react-typed-form",
   "version": "0.2.3",
-  "author": "James Isaac <james.isaac@gmail.com>",
+  "author": "M10c",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/m10c/react-typed-form/issues"
@@ -10,18 +10,21 @@
     "type": "git",
     "url": "https://github.com/m10c/react-typed-form.git"
   },
-  "main": "lib/index.js",
-  "module": "es/index.js",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "index.d.ts",
   "files": [
-    "es",
     "lib",
     "src",
-    "index.d.ts"
+    "index.d.ts",
+    "!**/__flowtests__",
+    "!**/__samples__"
   ],
   "scripts": {
     "build": "npm run build:commonjs && npm run build:es",
-    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib && cp src/_index.js.flow lib/index.js.flow",
-    "build:es": "cross-env BABEL_ENV=es babel src --out-dir es && cp src/_index.js.flow es/index.js.flow",
+    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib/commonjs && cp src/_index.js.flow lib/commonjs/index.js.flow",
+    "build:es": "cross-env BABEL_ENV=es babel src --out-dir lib/module && cp src/_index.js.flow lib/module/index.js.flow",
+    "clean": "rimraf lib",
     "lint": "eslint src/**/*.js",
     "pretty": "prettier --write \"src/**/*.js\"",
     "test": "yarn flow && yarn run lint",
@@ -45,7 +48,8 @@
     "eslint-plugin-react": "^7.8.2",
     "flow-bin": "^0.135.0",
     "prettier": "^2.1.2",
-    "react": "^16.8.0"
+    "react": "^16.8.0",
+    "rimraf": "^3.0.2"
   },
   "peerDependencies": {
     "react": "*"

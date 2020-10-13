@@ -67,7 +67,7 @@ const EnhancedOwnPropsInvalid = withForm((ownProps) => ({
 
 const EnhancedValidatejs = withForm({
   onSubmit: (values) => console.log(values),
-  validate: createValidator({
+  validator: createValidator({
     username: {
       presence: { allowEmpty: false },
       length: { minimum: 2, maximum: 12 },

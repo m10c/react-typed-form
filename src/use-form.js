@@ -1,7 +1,6 @@
 // @flow
 
 import type {
-  ErrorFields,
   FormErrors,
   Options,
   TypedFieldProp,
@@ -10,38 +9,41 @@ import type {
 
 import * as React from 'react';
 
-type InvalidFields<T> = Array<$Keys<ErrorFields<T>>>;
+import reducer from './core/reducer';
 
 export default function useForm<T: {}>({
-  defaultValues: defaultValuesOriginal,
+  defaultValues = {},
   onSubmit,
   pristineValues,
-  validate,
-  validateOnChange,
+  validator,
+  alwaysRevalidateOnChange,
+  revalidateFields,
 }: Options<T>): TypedFormProp<T> {
-  // $FlowFixMe
-  const defaultValues: T = defaultValuesOriginal || {};
-  const [values, setValues] = React.useState<T>(defaultValues);
+  function determineErorrs(values: T): FormErrors<T> {
+    return validator ? validator(values) : {};
+  }
 
-  const determineInvalid = (): InvalidFields<T> => {
-    return validate && validateOnChange ? Object.keys(validate(values)) : [];
-  };
-
-  const [invalid, setInvalid] = React.useState<InvalidFields<T>>(
-    determineInvalid()
+  const [state, dispatch] = React.useReducer(
+    reducer,
+    {
+      values: defaultValues,
+      errors: determineErorrs(defaultValues),
+      lastErrors: {},
+      dirty: [],
+      loading: false,
+    },
+    undefined
   );
-  const [lastErrors, setLastErrors] = React.useState<FormErrors<T>>({});
-  const [loading, setLoading] = React.useState<boolean>(false);
 
   function handleValueChange<FK: string & $Keys<T>, FT: $ElementType<T, FK>>(
     name: FK,
     value: FT
   ): void {
-    // Callback style to avoid race condition
-    // $FlowFixMe
-    setValues((prevValues) => ({ ...prevValues, [name]: value }));
-    // TODO: Doesn't depend on new values properly, might need a reducer
-    setInvalid(determineInvalid());
+    const errors =
+      alwaysRevalidateOnChange || revalidateFields?.includes(name)
+        ? determineErorrs({ ...state.values, [name]: value })
+        : undefined;
+    dispatch({ type: 'VALUE_CHANGE', payload: { name, value, errors } });
   }
 
   function getFieldProp<FK: string & $Keys<T>, FT: $ElementType<T, FK>>(
@@ -49,7 +51,7 @@ export default function useForm<T: {}>({
   ): TypedFieldProp<FT> {
     const pristine = pristineValues;
 
-    let value = values[name];
+    let value = state.values[name];
     if (value === undefined && pristine && pristine[name] !== undefined) {
       value = pristine[name];
     }
@@ -63,9 +65,10 @@ export default function useForm<T: {}>({
       label,
       value,
       handleValueChange: handleValueChange.bind(null, name),
-      isLoading: loading,
-      isValid: validateOnChange && !invalid.includes(name),
-      lastErrorList: lastErrors[name],
+      isDirty: state.dirty[name] || false,
+      isLoading: state.loading,
+      errorList: state.errors[name],
+      lastErrorList: state.lastErrors[name],
     };
   }
 
@@ -74,36 +77,40 @@ export default function useForm<T: {}>({
    * await it.
    */
   async function handleSubmit(): Promise<boolean> {
-    let errors = {};
-    if (validate) {
-      errors = validate(values);
-    }
+    const errors = determineErorrs(state.values);
 
-    setLastErrors(errors);
+    dispatch({ type: 'SUBMIT', payload: { errors } });
     if (Object.keys(errors).length > 0) return false;
 
-    // TODO: This needs to be deferred into the callback, otherwise lastErrors
-    // used by the form prop will be stale
-    await onSubmit(values, prepareFormProp());
-    return true;
+    const result = await onSubmit(state.values, prepareFormProp());
+    return result === false ? false : true;
   }
 
   function prepareFormProp(): TypedFormProp<T> {
     return {
       getField: getFieldProp,
       handleSubmit,
-      isLoading: loading,
-      setLoading,
-      addError: (name, error) => {
-        // $FlowFixMe
-        setLastErrors((prevState) => ({
-          ...prevState,
-          [name]: [...(prevState[name] || []), error],
-        }));
+      isLoading: state.loading,
+      setLoading: (value: boolean) =>
+        dispatch({ type: 'SET_LOADING', payload: value }),
+      addSubmitError: (name, error) => {
+        dispatch({
+          type: 'ADD_SUBMIT_ERROR',
+          payload: { name, error },
+        });
       },
-      formErrorList: lastErrors._form || [],
-      values,
-      reset: () => setValues(defaultValues),
+      formErrorList: state.lastErrors._form || [],
+      values: state.values,
+      reset: () =>
+        dispatch({
+          type: 'RESET',
+          payload: {
+            values: defaultValues,
+            errors: determineErorrs(defaultValues),
+          },
+        }),
+      errors: state.errors,
+      lastErrors: state.lastErrors,
     };
   }
 

@@ -1,6 +1,13 @@
 ## Unreleased
 
+- **BC Break**: `isValid: bool` removed from field prop, replaced with more useful `errorList?: string[]`.
+- **BC Break**: `validate` form option renamed to `validator`.
+- **BC Break**: `validateOnChange` form option renamed to `alwaysRevalidateOnChange`.
+- **BC Break**: `addError` form option renamed to `addSubmitError`, to indicate it should only be used during form submission.
 - **BC Break**: Remove bridges for React Native and validate.js.
+- `onSubmit` can now return a `boolen` or `Promise<boolean>`, to indicate whether submission was successful (useful for code awaiting `handleSubmit`).
+- Added `isDirty` to the field prop, to indicate whether the field has seen a change even since the last submission.
+- Fixed out of sync internal state (`isInvalid` lagging one change behind) by refactoring to `useReducer`.
 
 ## 0.2.3
 

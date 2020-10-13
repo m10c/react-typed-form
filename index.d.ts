@@ -7,7 +7,7 @@ import * as React from 'react';
 export type ErrorFields<T> = T & { _form?: never };
 
 export type FormErrors<T extends {}> = Readonly<
-  { [P in keyof T]: string[] | undefined }
+  { [P in keyof T]?: string[] | undefined }
 >;
 
 export type TypedFieldProp<FTOut, FTIn = FTOut | undefined> = Readonly<{
@@ -15,9 +15,10 @@ export type TypedFieldProp<FTOut, FTIn = FTOut | undefined> = Readonly<{
   label: string;
   value: FTIn;
   handleValueChange: (value: FTOut) => void;
+  isDirty?: boolean;
   isLoading?: boolean;
+  errorList?: string[];
   lastErrorList?: string[];
-  isValid?: boolean;
 }>;
 
 export type TypedFormProp<T> = Readonly<{
@@ -25,18 +26,24 @@ export type TypedFormProp<T> = Readonly<{
   handleSubmit: () => Promise<boolean>;
   isLoading: boolean;
   setLoading: (loading: boolean) => void;
-  addError: (field: keyof ErrorFields<T>, error: string) => void;
+  addSubmitError: (field: keyof ErrorFields<T>, error: string) => void;
   formErrorList: string[];
   values: T;
   reset: () => void;
+  errors: FormErrors<ErrorFields<T>>;
+  lastErrors: FormErrors<ErrorFields<T>>;
 }>;
 
 export type Options<T> = Readonly<{
-  onSubmit: (values: T, form: TypedFormProp<T>) => void | Promise<void>;
+  onSubmit: (
+    values: T,
+    form: TypedFormProp<T>
+  ) => void | boolean | Promise<void> | Promise<boolean>;
   defaultValues?: T;
   pristineValues?: Partial<T>;
-  validate?: (values: T) => FormErrors<T>;
-  validateOnChange?: boolean;
+  validator?: (values: T) => FormErrors<T>;
+  alwaysRevalidateOnChange?: boolean;
+  revalidateFields?: Array<keyof T>;
 }>;
 
 export function useForm<T extends {}>(options: Options<T>): TypedFormProp<T>;
