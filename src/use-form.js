@@ -19,7 +19,7 @@ export default function useForm<T: {}>({
   alwaysRevalidateOnChange,
   revalidateFields,
 }: Options<T>): TypedFormProp<T> {
-  function determineErorrs(values: T): FormErrors<T> {
+  function determineErrors(values: T): FormErrors<T> {
     return validator ? validator(values) : {};
   }
 
@@ -27,7 +27,7 @@ export default function useForm<T: {}>({
     reducer,
     {
       values: defaultValues,
-      errors: determineErorrs(defaultValues),
+      errors: determineErrors(defaultValues),
       lastErrors: {},
       dirty: [],
       loading: false,
@@ -41,7 +41,7 @@ export default function useForm<T: {}>({
   ): void {
     const errors =
       alwaysRevalidateOnChange || revalidateFields?.includes(name)
-        ? determineErorrs({ ...state.values, [name]: value })
+        ? determineErrors({ ...state.values, [name]: value })
         : undefined;
     dispatch({ type: 'VALUE_CHANGE', payload: { name, value, errors } });
   }
@@ -77,7 +77,7 @@ export default function useForm<T: {}>({
    * await it.
    */
   async function handleSubmit(): Promise<boolean> {
-    const errors = determineErorrs(state.values);
+    const errors = determineErrors(state.values);
 
     dispatch({ type: 'SUBMIT', payload: { errors } });
     if (Object.keys(errors).length > 0) return false;
@@ -106,7 +106,7 @@ export default function useForm<T: {}>({
           type: 'RESET',
           payload: {
             values: defaultValues,
-            errors: determineErorrs(defaultValues),
+            errors: determineErrors(defaultValues),
           },
         }),
       errors: state.errors,
