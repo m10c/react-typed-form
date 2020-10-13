@@ -1,10 +1,10 @@
 // @flow
 
 import * as React from 'react';
-import type { TypedFieldProp } from '..';
+import type { FieldProp } from '..';
 
 type Props = $ReadOnly<{
-  field: TypedFieldProp<string>,
+  field: FieldProp<string>,
 }>;
 
 export default function FieldText({ field }: Props): React.Node {

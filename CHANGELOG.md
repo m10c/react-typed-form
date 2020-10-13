@@ -4,6 +4,13 @@
 - **BC Break**: `validate` form option renamed to `validator`.
 - **BC Break**: `validateOnChange` form option renamed to `alwaysRevalidateOnChange`.
 - **BC Break**: `addError` form option renamed to `addSubmitError`, to indicate it should only be used during form submission.
+- **BC Break**: Several exports renamed, mainly to reflect that _typed_ is very much the recommended mode of operation:
+  - `TypedFieldProp` -> `FieldProp`
+  - `TypedFormProp` -> `FormObject`
+  - `TypedForm` -> `FormComponent`
+  - `FieldProp` -> `UntypedFieldProp`
+  - `FormProp` -> `UntypedFormObject`
+  - `Form` -> `UntypedFormComponent`
 - **BC Break**: Remove bridges for React Native and validate.js.
 - Added `errors`, `lastErrors`, `hasErrors` and `hasLastErrors` properties to the form object.
 - Added `revalidateFields` to the field prop, to opt-in which fields should revalidate on change.

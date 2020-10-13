@@ -10,7 +10,7 @@ export type FormErrors<T extends {}> = Readonly<
   { [P in keyof T]?: string[] | undefined }
 >;
 
-export type TypedFieldProp<FTOut, FTIn = FTOut | undefined> = Readonly<{
+export type FieldProp<FTOut, FTIn = FTOut | undefined> = Readonly<{
   name: string;
   label: string;
   value: FTIn;
@@ -21,8 +21,8 @@ export type TypedFieldProp<FTOut, FTIn = FTOut | undefined> = Readonly<{
   lastErrorList?: string[];
 }>;
 
-export type TypedFormProp<T> = Readonly<{
-  getField: <K extends keyof T>(field: K) => TypedFieldProp<T[K]>;
+export type FormObject<T> = Readonly<{
+  getField: <K extends keyof T>(field: K) => FieldProp<T[K]>;
   handleSubmit: () => Promise<boolean>;
   isLoading: boolean;
   setLoading: (loading: boolean) => void;
@@ -39,7 +39,7 @@ export type TypedFormProp<T> = Readonly<{
 export type Options<T> = Readonly<{
   onSubmit: (
     values: T,
-    form: TypedFormProp<T>
+    form: FormObject<T>
   ) => void | boolean | Promise<void> | Promise<boolean>;
   defaultValues?: T;
   pristineValues?: Partial<T>;
@@ -48,4 +48,4 @@ export type Options<T> = Readonly<{
   revalidateFields?: Array<keyof T>;
 }>;
 
-export function useForm<T extends {}>(options: Options<T>): TypedFormProp<T>;
+export function useForm<T extends {}>(options: Options<T>): FormObject<T>;

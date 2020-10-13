@@ -5,7 +5,7 @@ import * as React from 'react';
 import { withForm } from '..';
 import { FieldText, createValidator } from '../__samples__';
 
-import type { TypedFormProp } from '..';
+import type { FormObject } from '..';
 
 type LoginData = {|
   username?: string,
@@ -14,7 +14,7 @@ type LoginData = {|
 
 type Props = $ReadOnly<{|
   foo: number,
-  form: TypedFormProp<LoginData>,
+  form: FormObject<LoginData>,
 |}>;
 
 const LoginForm = ({ form: { getField, handleSubmit, isLoading } }: Props) => (

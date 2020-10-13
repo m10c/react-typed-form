@@ -1,11 +1,6 @@
 // @flow
 
-import type {
-  FormErrors,
-  Options,
-  TypedFieldProp,
-  TypedFormProp,
-} from './types';
+import type { FormErrors, Options, FieldProp, FormObject } from './types';
 
 import * as React from 'react';
 
@@ -18,7 +13,7 @@ export default function useForm<T: {}>({
   validator,
   alwaysRevalidateOnChange,
   revalidateFields,
-}: Options<T>): TypedFormProp<T> {
+}: Options<T>): FormObject<T> {
   function determineErrors(values: T): FormErrors<T> {
     return validator ? validator(values) : {};
   }
@@ -48,7 +43,7 @@ export default function useForm<T: {}>({
 
   function getFieldProp<FK: string & $Keys<T>, FT: $ElementType<T, FK>>(
     name: FK
-  ): TypedFieldProp<FT> {
+  ): FieldProp<FT> {
     const pristine = pristineValues;
 
     let value = state.values[name];
@@ -86,7 +81,7 @@ export default function useForm<T: {}>({
     return result === false ? false : true;
   }
 
-  function prepareFormProp(): TypedFormProp<T> {
+  function prepareFormProp(): FormObject<T> {
     return {
       getField: getFieldProp,
       handleSubmit,

@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 
 import * as React from 'react';
-import { TypedForm } from '..';
+import { FormComponent } from '..';
 import { FieldCheckbox, FieldText } from '../__samples__';
 
 import type { $Optional } from '..';
@@ -12,7 +12,7 @@ type FormShape = {|
   password?: string,
 |};
 
-class LoginForm extends TypedForm<FormShape> {}
+class LoginForm extends FormComponent<FormShape> {}
 
 const LoginScreen = () => (
   <LoginForm
@@ -44,7 +44,7 @@ const LoginScreen = () => (
 );
 <LoginScreen />;
 
-class DefaultsLoginForm extends TypedForm<{|
+class DefaultsLoginForm extends FormComponent<{|
   username: string,
   password?: string,
 |}> {}
@@ -98,7 +98,7 @@ const DefaultsBrokenMissingLoginScreen = () => (
 );
 <DefaultsBrokenMissingLoginScreen />;
 
-class PristineLoginForm extends TypedForm<{
+class PristineLoginForm extends FormComponent<{
   username?: string,
   password?: string,
 }> {}
@@ -119,7 +119,7 @@ type User = {
   enabled: boolean,
 };
 
-class PristineModelLoginForm extends TypedForm<$Optional<User>> {}
+class PristineModelLoginForm extends FormComponent<$Optional<User>> {}
 
 const PristineModelLoginScreen = ({ user }: { user: User }) => (
   <PristineModelLoginForm

@@ -1,10 +1,10 @@
 // @flow
 
 import * as React from 'react';
-import type { TypedFieldProp } from '..';
+import type { FieldProp } from '..';
 
 type Props = $ReadOnly<{
-  field: TypedFieldProp<boolean>,
+  field: FieldProp<boolean>,
 }>;
 
 export default function FieldCheckbox({ field }: Props): React.Node {

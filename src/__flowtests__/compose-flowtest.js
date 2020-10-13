@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { withForm } from '../';
 
-import type { TypedFormProp } from '../';
+import type { FormObject } from '../';
 
 // eslint-disable-next-line flowtype/no-weak-types
 const compose: $Compose = (null: any);
@@ -20,7 +20,7 @@ const injectFoo = <Props: {}, K: React.ComponentType<Props>>(
 class ExampleComponent extends React.Component<{|
   bar: string,
   foo: string,
-  form: TypedFormProp<{| name?: string |}>,
+  form: FormObject<{| name?: string |}>,
 |}> {}
 
 const InjectedComponent = compose(

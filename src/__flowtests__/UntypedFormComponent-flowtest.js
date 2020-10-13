@@ -2,11 +2,11 @@
 /* eslint-disable no-console */
 
 import * as React from 'react';
-import { Form } from '..';
+import { UntypedFormComponent } from '..';
 import { FieldText, FieldTextNullable, createValidator } from '../__samples__';
 
 const LoginScreen = () => (
-  <Form onSubmit={(values) => console.log(values)}>
+  <UntypedFormComponent onSubmit={(values) => console.log(values)}>
     {({ getField, handleSubmit }) => (
       <form
         onSubmit={(ev) => {
@@ -19,13 +19,13 @@ const LoginScreen = () => (
         <input type="submit" onPress={handleSubmit} />
       </form>
     )}
-  </Form>
+  </UntypedFormComponent>
 );
 
 <LoginScreen />;
 
 const LoginScreenInvalid = () => (
-  <Form onSubmit={(values) => console.log(values)}>
+  <UntypedFormComponent onSubmit={(values) => console.log(values)}>
     {/* $FlowExpectedError */}
     {({ getField, handleSubmit, invalidProp }) => (
       <form
@@ -40,7 +40,7 @@ const LoginScreenInvalid = () => (
         <input type="Submit" onPress={handleSubmit} />
       </form>
     )}
-  </Form>
+  </UntypedFormComponent>
 );
 
 <LoginScreenInvalid />;
@@ -50,7 +50,7 @@ class EnhancedValidatejs extends React.PureComponent<{}> {
 
   render() {
     return (
-      <Form
+      <UntypedFormComponent
         validator={createValidator({
           username: {
             presence: { allowEmpty: false },
@@ -73,7 +73,7 @@ class EnhancedValidatejs extends React.PureComponent<{}> {
             <input type="submit" onPress={handleSubmit} />
           </form>
         )}
-      </Form>
+      </UntypedFormComponent>
     );
   }
 }

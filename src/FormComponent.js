@@ -3,11 +3,11 @@
 import * as React from 'react';
 import useForm from './use-form';
 
-import type { Options, TypedFormProp } from './types';
+import type { Options, FormObject } from './types';
 
 type Props<T> = $ReadOnly<{|
   ...Options<T>,
-  children: (TypedFormProp<T>) => React.Node,
+  children: (FormObject<T>) => React.Node,
 |}>;
 
 function WithHooks<T: {}>({ children, ...options }: Props<T>) {
@@ -15,7 +15,9 @@ function WithHooks<T: {}>({ children, ...options }: Props<T>) {
   return children(form);
 }
 
-export default class TypedForm<T: {}> extends React.PureComponent<Props<T>> {
+export default class FormComponent<T: {}> extends React.PureComponent<
+  Props<T>
+> {
   render(): React.Node {
     return <WithHooks {...this.props} />;
   }

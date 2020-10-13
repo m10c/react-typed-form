@@ -3,10 +3,10 @@
 
 import * as React from 'react';
 import wrapDisplayName from 'recompose/wrapDisplayName';
-import TypedForm from './TypedForm';
+import FormComponent from './FormComponent';
 
 import type { ComponentType } from 'react';
-import type { TypedFormProp, Options } from './types';
+import type { FormObject, Options } from './types';
 
 /*
 P = Props
@@ -14,7 +14,7 @@ C = Wrapped component
 RP = Returned props (without injected)
 */
 
-type InjectedProps<T> = { form: TypedFormProp<T> | void };
+type InjectedProps<T> = { form: FormObject<T> | void };
 
 export default function withForm<
   T: {},
@@ -22,7 +22,7 @@ export default function withForm<
   C: ComponentType<P>
   // Can't have RP in generics otherwise multiple HOC breaks
   // https://github.com/facebook/flow/issues/6587
-  // RP: $Diff<React.ElementConfig<C>, { form: TypedFormProp<T> | void }>
+  // RP: $Diff<React.ElementConfig<C>, { form: FormObject<T> | void }>
 >(
   // eslint-disable-next-line flowtype/space-after-type-colon
   optionsFn:
@@ -40,10 +40,10 @@ export default function withForm<
       const options =
         typeof optionsFn === 'object' ? optionsFn : optionsFn(props);
       return (
-        <TypedForm {...options}>
+        <FormComponent {...options}>
           {/**/}
           {(form) => <Component form={form} {...props} />}
-        </TypedForm>
+        </FormComponent>
       );
     };
 

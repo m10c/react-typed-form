@@ -34,13 +34,13 @@ export type FormErrors<T: {}> = $ObjMap<ErrorFields<T>, () => string[] | void>;
  * The object returned when retrieving a field, which you likely want to pass
  * dirctely into your component.
  */
-export type TypedFieldProp<FTOut, FTIn = FTOut | void> = $ReadOnly<{|
+export type FieldProp<FTOut, FTIn = FTOut | void> = $ReadOnly<{|
   name: string,
   label: string,
   value: FTIn,
   handleValueChange: (value: FTOut) => void,
   // These are optional to make it easier for users to manually create their
-  // own code compatible with the TypedFieldProp API.
+  // own code compatible with the FieldProp API.
   isDirty?: boolean,
   isLoading?: boolean,
   errorList?: string[],
@@ -49,12 +49,12 @@ export type TypedFieldProp<FTOut, FTIn = FTOut | void> = $ReadOnly<{|
 
 type GetField<T> = <FK: $Keys<T>, FT: $ElementType<T, FK>>(
   field: FK
-) => TypedFieldProp<FT>;
+) => FieldProp<FT>;
 
 /**
  * The object returned when creating a form
  */
-export type TypedFormProp<T> = $ReadOnly<{|
+export type FormObject<T> = $ReadOnly<{|
   getField: GetField<T>,
   handleSubmit: () => Promise<boolean>,
   isLoading: boolean,
@@ -78,7 +78,7 @@ export type Options<T> = $ReadOnly<{|
   // Required
   onSubmit: (
     values: T,
-    form: TypedFormProp<T>
+    form: FormObject<T>
   ) => void | boolean | Promise<void> | Promise<boolean>,
 
   // Optional

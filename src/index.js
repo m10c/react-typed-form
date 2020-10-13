@@ -1,9 +1,9 @@
 // @flow
 
-export { default as TypedForm } from './TypedForm';
+export { default as FormComponent } from './FormComponent';
 export { default as useForm } from './use-form';
 export { default as withForm } from './with-form';
-export type { $Optional, TypedFieldProp, TypedFormProp } from './types';
+export type { $Optional, FieldProp, FormObject } from './types';
 
-export { Form } from './unsafe-exports';
-export type { FieldProp, FormProp } from './unsafe-exports';
+export { UntypedFormComponent } from './untyped-exports';
+export type { UntypedField, UntypedFormObject } from './untyped-exports';

@@ -70,10 +70,10 @@ The example below brings into play many more features of the library:
 
 import * as React from 'react';
 import { useForm } from 'react-typed-form';
-import type { TypedFieldProp } from 'react-typed-form';
+import type { FieldProp } from 'react-typed-form';
 
 type Props = $ReadOnly<{|
-  field: TypedFieldProp<string | null>,
+  field: FieldProp<string | null>,
 |}>;
 
 function FieldText = ({ field }: Props) {
