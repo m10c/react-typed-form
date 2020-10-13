@@ -111,6 +111,8 @@ export default function useForm<T: {}>({
         }),
       errors: state.errors,
       lastErrors: state.lastErrors,
+      hasErrors: Object.keys(state.errors).length > 0,
+      hasLastErrors: Object.keys(state.lastErrors).length > 0,
     };
   }
 

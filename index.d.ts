@@ -32,6 +32,8 @@ export type TypedFormProp<T> = Readonly<{
   reset: () => void;
   errors: FormErrors<ErrorFields<T>>;
   lastErrors: FormErrors<ErrorFields<T>>;
+  hasErrors: boolean;
+  hasLastErrors: boolean;
 }>;
 
 export type Options<T> = Readonly<{

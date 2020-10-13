@@ -67,6 +67,8 @@ export type TypedFormProp<T> = $ReadOnly<{|
   // New for 0.3
   errors: FormErrors<ErrorFields<T>>,
   lastErrors: FormErrors<ErrorFields<T>>,
+  hasErrors: boolean,
+  hasLastErrors: boolean,
 |}>;
 
 /**
