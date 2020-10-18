@@ -16,6 +16,7 @@ class LoginForm extends FormComponent<FormShape> {}
 
 const LoginScreen = () => (
   <LoginForm
+    defaultValues={{ ...null }}
     onSubmit={(values: FormShape) => {
       (values.username: ?string);
       // $FlowExpectedError
@@ -104,6 +105,7 @@ class PristineLoginForm extends FormComponent<{
 }> {}
 const PristineLoginScreen = () => (
   <PristineLoginForm
+    defaultValues={{}}
     pristineValues={{ username: 'anon' }}
     onSubmit={(values) => console.log(values)}
   >
@@ -123,6 +125,7 @@ class PristineModelLoginForm extends FormComponent<$Optional<User>> {}
 
 const PristineModelLoginScreen = ({ user }: { user: User }) => (
   <PristineModelLoginForm
+    defaultValues={{}}
     pristineValues={user}
     onSubmit={(values) => console.log(values)}
   >

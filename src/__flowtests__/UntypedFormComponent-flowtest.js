@@ -6,7 +6,10 @@ import { UntypedFormComponent } from '..';
 import { FieldText, FieldTextNullable, createValidator } from '../__samples__';
 
 const LoginScreen = () => (
-  <UntypedFormComponent onSubmit={(values) => console.log(values)}>
+  <UntypedFormComponent
+    defaultValues={{}}
+    onSubmit={(values) => console.log(values)}
+  >
     {({ getField, handleSubmit }) => (
       <form
         onSubmit={(ev) => {
@@ -25,7 +28,10 @@ const LoginScreen = () => (
 <LoginScreen />;
 
 const LoginScreenInvalid = () => (
-  <UntypedFormComponent onSubmit={(values) => console.log(values)}>
+  <UntypedFormComponent
+    defaultValues={{}}
+    onSubmit={(values) => console.log(values)}
+  >
     {/* $FlowExpectedError */}
     {({ getField, handleSubmit, invalidProp }) => (
       <form
@@ -51,6 +57,7 @@ class EnhancedValidatejs extends React.PureComponent<{}> {
   render() {
     return (
       <UntypedFormComponent
+        defaultValues={{}}
         validator={createValidator({
           username: {
             presence: { allowEmpty: false },

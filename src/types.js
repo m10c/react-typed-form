@@ -65,8 +65,8 @@ export type FormObject<T> = $ReadOnly<{|
   values: T,
   reset: () => void,
   // New for 0.3
-  errors: FormErrors<ErrorFields<T>>,
-  lastErrors: FormErrors<ErrorFields<T>>,
+  errors: FormErrors<T>,
+  lastErrors: FormErrors<T>,
   hasErrors: boolean,
   hasLastErrors: boolean,
 |}>;
@@ -76,13 +76,13 @@ export type FormObject<T> = $ReadOnly<{|
  */
 export type Options<T> = $ReadOnly<{|
   // Required
+  defaultValues: T,
   onSubmit: (
     values: T,
     form: FormObject<T>
   ) => void | boolean | Promise<void> | Promise<boolean>,
 
   // Optional
-  defaultValues?: T,
   pristineValues?: $Shape<T>, // Pristine values don't count as changes
   validator?: (values: T) => FormErrors<T>,
   alwaysRevalidateOnChange?: boolean,

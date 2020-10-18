@@ -1,9 +1,11 @@
 ## Unreleased
 
+- **BC Break**: Form option changes:
+  - `defaultValues` form option is now always required.
+  - `validate` renamed to `validator`.
+  - `validateOnChange` renamed to `alwaysRevalidateOnChange`.
+  - `addError` renamed to `addSubmitError`, to indicate it should only be used during form submission.
 - **BC Break**: `isValid: bool` removed from field prop, replaced with more useful `errorList?: string[]`.
-- **BC Break**: `validate` form option renamed to `validator`.
-- **BC Break**: `validateOnChange` form option renamed to `alwaysRevalidateOnChange`.
-- **BC Break**: `addError` form option renamed to `addSubmitError`, to indicate it should only be used during form submission.
 - **BC Break**: Several exports renamed, mainly to reflect that _typed_ is very much the recommended mode of operation:
   - `TypedFieldProp` -> `FieldProp`
   - `TypedFormProp` -> `FormObject`

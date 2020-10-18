@@ -25,7 +25,11 @@ class ExampleComponent extends React.Component<{|
 
 const InjectedComponent = compose(
   injectFoo,
-  withForm({ onSubmit: () => {} }),
+  // $FlowFixMe[incompatible-call]
+  withForm({
+    defaultValues: { ...null },
+    onSubmit: () => {},
+  }),
   injectFoo
 )(ExampleComponent);
 

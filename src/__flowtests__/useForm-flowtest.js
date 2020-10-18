@@ -14,6 +14,7 @@ type Shape = {|
 
 function Screen() {
   const { getField, handleSubmit } = useForm<Shape>({
+    defaultValues: { ...null },
     onSubmit: (values) => {
       (values.username: ?string);
       // $FlowExpectedError
@@ -72,13 +73,22 @@ function DefaultsBrokenUndefScreen() {
 
 function DefaultsBrokenMissingScreen() {
   useForm<DefaultsShape>({
-    // $FlowExpectedError
+    // $FlowExpectedError[prop-missing]
     defaultValues: { password: 'foo' },
     onSubmit: (values) => console.log(values),
   });
   return <form />;
 }
 <DefaultsBrokenMissingScreen />;
+
+function DefaultsBrokenAllMissingScreen() {
+  // $FlowExpectedError[prop-missing]
+  useForm<DefaultsShape>({
+    onSubmit: (values) => console.log(values),
+  });
+  return <form />;
+}
+<DefaultsBrokenAllMissingScreen />;
 
 type PristineShape = {
   username?: string,
@@ -87,6 +97,7 @@ type PristineShape = {
 
 function PristineScreen() {
   useForm<PristineShape>({
+    defaultValues: {},
     pristineValues: { username: 'anon' },
     onSubmit: (values) => console.log(values),
   });
@@ -103,6 +114,7 @@ type User = {
 
 function PristineModelScreen({ user }: { user: User }) {
   const { getField } = useForm<$Optional<User>>({
+    defaultValues: {},
     pristineValues: user,
     onSubmit: (values) => console.log(values),
   });

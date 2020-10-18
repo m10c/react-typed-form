@@ -29,6 +29,7 @@ const LoginForm = ({ form: { getField, handleSubmit, isLoading } }: Props) => (
 <LoginForm foo={1} />;
 
 const EnhancedSimple = withForm({
+  defaultValues: { ...null },
   onSubmit: (values: LoginData) => {
     console.log(values.username);
     // $FlowExpectedError
@@ -46,7 +47,9 @@ const EnhancedInvalid = withForm({
 
 <EnhancedInvalid foo={1} />;
 
+// $FlowFixMe[incompatible-call]
 const EnhancedOwnProps = withForm((ownProps) => ({
+  defaultValues: { ...null },
   onSubmit: () => {
     ownProps.foo;
   },
@@ -56,7 +59,9 @@ const EnhancedOwnProps = withForm((ownProps) => ({
 // $FlowExpectedError
 <EnhancedOwnProps bar={1} />;
 
+// $FlowFixMe[incompatible-call]
 const EnhancedOwnPropsInvalid = withForm((ownProps) => ({
+  defaultValues: { ...null },
   onSubmit: () => {
     // $FlowExpectedError
     ownProps.bar;
@@ -65,7 +70,9 @@ const EnhancedOwnPropsInvalid = withForm((ownProps) => ({
 
 <EnhancedOwnPropsInvalid foo={1} />;
 
+// $FlowFixMe[incompatible-call]
 const EnhancedValidatejs = withForm({
+  defaultValues: { ...null },
   onSubmit: (values) => console.log(values),
   validator: createValidator({
     username: {
