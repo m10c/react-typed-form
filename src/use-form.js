@@ -15,7 +15,15 @@ export default function useForm<T: {}>({
   revalidateFields,
 }: Options<T>): FormObject<T> {
   function determineErrors(values: T): FormErrors<T> {
-    return validator ? validator(values) : {};
+    if (!validator) return {};
+
+    /* eslint-disable flowtype/no-weak-types */
+    return Object.fromEntries(
+      (Object.entries((validator(values): any)).filter(
+        ([, v]) => (v: any)?.length > 0
+      ): any)
+    );
+    /* eslint-enable flowtype/no-weak-types */
   }
 
   const [state, dispatch] = React.useReducer(

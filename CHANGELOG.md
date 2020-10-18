@@ -1,4 +1,4 @@
-## Unreleased
+## 0.3.0
 
 - **BC Break**: Form option changes:
   - `defaultValues` form option is now always required.
@@ -15,9 +15,10 @@
   - `Form` -> `UntypedFormComponent`
 - **BC Break**: Remove bridges for React Native and validate.js.
 - Added `errors`, `lastErrors`, `hasErrors` and `hasLastErrors` properties to the form object.
-- Added `revalidateFields` to the field prop, to opt-in which fields should revalidate on change.
+- Added `revalidateFields` to the form option, to opt-in which fields should revalidate on change.
 - Added `isDirty` to the field prop, to indicate whether the field has seen a change even since the last submission.
 - `onSubmit` can now return a `boolen` or `Promise<boolean>`, to indicate whether submission was successful (useful for code awaiting `handleSubmit`).
+- Validation functions can now return an empty array for a field to indicate no errors, rather than only `undefined`.
 - Fixed out of sync internal state (`isInvalid` lagging one change behind) by refactoring to `useReducer`.
 
 ## 0.2.3
