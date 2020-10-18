@@ -39,6 +39,7 @@ import { FieldTextInput } from 'react-typed-form/bridge/components/react-native'
 
 export default function MyPage() {
   const { getField, handleSubmit } = useForm({
+    defaultValues: {}
     onSubmit: (values) => {
       // Do something with your values
       console.log(values);

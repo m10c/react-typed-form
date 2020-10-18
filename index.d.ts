@@ -47,6 +47,8 @@ export type Options<T, TOut = T> = Readonly<{
   transformValidator?: (values: T) => TOut | { _errors: FormErrors<T> };
   alwaysRevalidateOnChange?: boolean;
   revalidateFields?: Array<keyof T>;
+  preValidateTransform?: (values: T) => T;
+  postValidateTransform?: (values: T) => T;
 }>;
 
 export function useForm<T extends {}>(options: Options<T>): FormObject<T>;

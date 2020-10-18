@@ -13,13 +13,16 @@ export default function useForm<T: {}>({
   validator,
   alwaysRevalidateOnChange,
   revalidateFields,
+  preValidateTransform,
+  postValidateTransform,
 }: Options<T>): FormObject<T> {
   function determineErrors(values: T): FormErrors<T> {
     if (!validator) return {};
 
+    const transformed = preValidateTransform?.(values) ?? values;
     /* eslint-disable flowtype/no-weak-types */
     return Object.fromEntries(
-      (Object.entries((validator(values): any)).filter(
+      (Object.entries((validator(transformed): any)).filter(
         ([, v]) => (v: any)?.length > 0
       ): any)
     );
@@ -85,7 +88,10 @@ export default function useForm<T: {}>({
     dispatch({ type: 'SUBMIT', payload: { errors } });
     if (Object.keys(errors).length > 0) return false;
 
-    const result = await onSubmit(state.values, prepareFormProp());
+    let transformed = (preValidateTransform || ((x) => x))(state.values);
+    transformed = (postValidateTransform || ((x) => x))(transformed);
+
+    const result = await onSubmit(transformed, prepareFormProp());
     return result === false ? false : true;
   }
 

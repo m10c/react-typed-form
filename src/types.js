@@ -87,4 +87,6 @@ export type Options<T> = $ReadOnly<{|
   validator?: (values: T) => FormErrors<T>,
   alwaysRevalidateOnChange?: boolean,
   revalidateFields?: Array<$Keys<T>>,
+  preValidateTransform?: (T) => T,
+  postValidateTransform?: (T) => T,
 |}>;
