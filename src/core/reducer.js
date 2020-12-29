@@ -64,6 +64,7 @@ export default function reducer<T: {}>(
         ...state,
         errors: action.payload.errors,
         lastErrors: action.payload.errors,
+        dirty: [],
       };
     case 'RESET':
       return {
