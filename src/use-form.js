@@ -71,7 +71,7 @@ export default function useForm<T: {}>({
       label,
       value,
       handleValueChange: handleValueChange.bind(null, name),
-      isDirty: state.dirty[name] || false,
+      isDirty: state.dirty.includes(name),
       isLoading: state.loading,
       errorList: state.errors[name],
       lastErrorList: state.lastErrors[name],
