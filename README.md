@@ -34,8 +34,6 @@ However, this opens the door to adding in more advanced features with single lin
 import * as React from 'react';
 import { Button, View } from 'react-native';
 import { useForm } from 'react-typed-form';
-// If you don't have your own custom field widgets yet
-import { FieldTextInput } from 'react-typed-form/bridge/components/react-native';
 
 export default function MyPage() {
   const { getField, handleSubmit } = useForm({
@@ -48,7 +46,10 @@ export default function MyPage() {
 
   return (
     <View>
-      <FieldTextInput field={getField('name')} />
+      <input
+        value={getField('name').value || ''}
+        onChange={(ev) => getField('name').handleValueChange(ev.target.value)}
+      />
       <Button title="Submit" onPress={handleSubmit} />
     </View>
   );
@@ -63,8 +64,8 @@ The example below brings into play many more features of the library:
 - Pristine and default values (default values come through in the submitted values, while pristine values don't).
 - Loading state management (fields become uneditable while save is in progress).
 - Type-safe submission shape.
-- A custom field widget.
-- Automatic label generation.
+- A custom field component which receives the `field` prop.
+- Automatic label generation and usage of field name.
 
 ```js
 // @flow
@@ -77,23 +78,26 @@ type Props = $ReadOnly<{|
   field: FieldProp<string | null>,
 |}>;
 
-function FieldText = ({ field }: Props) {
+function FieldText({ field }: Props) {
   const errors = field.lastErrorList;
   return (
     <div>
-      <label>{field.label}</label>
+      <label for={field.name}>{field.label}</label>
       <input
+        name={field.name}
         value={field.value || ''}
-        onChange={e => field.handleValueChange(e.target.value)}
+        onChange={(ev) => field.handleValueChange(ev.target.value)}
         disabled={field.isLoading}
       />
       {errors && (
         <ul className="errors">
-          {errors.map(error => <li key={error}>{error}</li>)}
+          {errors.map((error) => (
+            <li key={error}>{error}</li>
+          ))}
         </ul>
       )}
     </div>
-  )
+  );
 }
 
 type FormShape = {|
@@ -104,12 +108,7 @@ type FormShape = {|
 |};
 
 export default function MyPage() {
-  const {
-    getField,
-    formErrorList,
-    handleSubmit,
-    isLoading
-  } = useForm<FormShape>({
+  const form = useForm<FormShape>({
     // Any non-optional typed values must have defaults provided
     defaultValues: { name: '', country: 'United Kingdom' },
     // Pristine values can give useful pre-filled values which don't get
@@ -141,23 +140,30 @@ export default function MyPage() {
   });
 
   return (
-    <form onSubmit={e => { e.preventDefault(); handleSubmit(); }}>
-      <FormErrorList errors={formErrorList} />
+    <form
+      onSubmit={(ev) => {
+        ev.preventDefault();
+        form.handleSubmit();
+      }}
+    >
+      <FormErrorList errors={form.formErrorList} />
 
       {/* If you're going down the type-safe route, you'll need separate fields
           for nullable vs non-nullable values */}
-      <FieldTextRequired field={getField('name')} />
+      <FieldTextRequired field={form.getField('name')} />
 
       {/* Override the auto-generated label */}
-      <FieldText field={{ ...getField('bio'), label: 'About you' }} />
+      <FieldText field={{ ...form.getField('bio'), label: 'About you' }} />
 
-      <FieldText field={getField('phone')} />
+      <FieldText field={form.getField('phone')} />
 
       {/* Create custom fields for any behaviour or types of values... */}
-      <FieldSelect choices={COUNTRIES} field={getField('country')} />
+      <FieldSelect choices={COUNTRIES} field={form.getField('country')} />
 
-      <button type="submit" disabled={isLoading}>Submit</button>
+      <button type="submit" disabled={form.isLoading}>
+        Submit
+      </button>
     </form>
-  )
+  );
 }
 ```
