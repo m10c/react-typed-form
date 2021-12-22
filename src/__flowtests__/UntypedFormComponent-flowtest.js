@@ -18,7 +18,7 @@ const LoginScreen = () => (
         }}
       >
         <FieldText field={getField('username')} />
-        <FieldText field={getField('password')} secureTextEntry />
+        <FieldText field={getField('password')} />
         <input type="submit" onPress={handleSubmit} />
       </form>
     )}
@@ -42,7 +42,7 @@ const LoginScreenInvalid = () => (
       >
         {invalidProp}
         <FieldText field={getField('username')} />
-        <FieldText field={getField('password')} secureTextEntry />
+        <FieldText field={getField('password')} />
         <input type="Submit" onPress={handleSubmit} />
       </form>
     )}
@@ -75,8 +75,8 @@ class EnhancedValidatejs extends React.PureComponent<{}> {
             }}
           >
             <FieldText field={getField('username')} />
-            <FieldText field={getField('password')} secureTextEntry />
-            <FieldTextNullable field={getField('password')} secureTextEntry />
+            <FieldText field={getField('password')} />
+            <FieldTextNullable field={getField('password')} />
             <input type="submit" onPress={handleSubmit} />
           </form>
         )}

@@ -1,3 +1,7 @@
+## 0.3.1
+
+- Fixed Flow types to be compatible with `exact_by_default`
+
 ## 0.3.0
 
 - **BC Break**: Form option changes:

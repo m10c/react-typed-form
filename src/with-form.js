@@ -17,8 +17,8 @@ RP = Returned props (without injected)
 type InjectedProps<T> = { form: FormObject<T> | void };
 
 export default function withForm<
-  T: {},
-  P: {},
+  T: { ... },
+  P: { ... },
   C: ComponentType<P>
   // Can't have RP in generics otherwise multiple HOC breaks
   // https://github.com/facebook/flow/issues/6587

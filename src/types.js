@@ -18,17 +18,18 @@
  * Similar to $Shape<>, but also allows any field to be `void`, even if the key
  * is provided.
  */
-export type $Optional<T: {}> = $Shape<$ObjMap<T, <V>(V) => V | void>>;
+export type $Optional<T> = $Rest<T, { ... }>;
+// export type $Optional<T> = $Shape<$ObjMap<T, <V>(V) => V | void>>;
 
 /**
  * Object containing fields that can contain errors (with original types)
  */
-export type ErrorFields<T> = { ...T, _form?: empty };
+export type ErrorFields<T> = { ...T, _form?: empty, ... };
 
 /**
  * The error map (array of strings in case of error, undefined if valid)
  */
-export type FormErrors<T: {}> = $ObjMap<ErrorFields<T>, () => string[] | void>;
+export type FormErrors<T> = $ObjMap<ErrorFields<T>, () => string[] | void>;
 
 /**
  * The object returned when retrieving a field, which you likely want to pass

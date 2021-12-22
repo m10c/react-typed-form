@@ -9,4 +9,3 @@
 [options]
 esproposal.optional_chaining=enable
 esproposal.nullish_coalescing=enable
-

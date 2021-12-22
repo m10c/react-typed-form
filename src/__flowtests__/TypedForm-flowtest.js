@@ -35,7 +35,7 @@ const LoginScreen = () => (
         }}
       >
         <FieldText field={getField('username')} />
-        <FieldText field={getField('password')} secureTextEntry />
+        <FieldText field={getField('password')} />
         {/* $FlowExpectedError */}
         <FieldText field={getField('noexist')} />
         <input type="submit" onPress={handleSubmit} />
@@ -69,7 +69,7 @@ const DefaultsLoginScreen = () => (
         }}
       >
         <FieldText field={getField('username')} />
-        <FieldText field={getField('password')} secureTextEntry />
+        <FieldText field={getField('password')} />
         <input type="submit" onPress={handleSubmit} />
       </form>
     )}
@@ -105,7 +105,7 @@ class PristineLoginForm extends FormComponent<{
 }> {}
 const PristineLoginScreen = () => (
   <PristineLoginForm
-    defaultValues={{}}
+    defaultValues={{ ...null }}
     pristineValues={{ username: 'anon' }}
     onSubmit={(values) => console.log(values)}
   >
@@ -125,7 +125,7 @@ class PristineModelLoginForm extends FormComponent<$Optional<User>> {}
 
 const PristineModelLoginScreen = ({ user }: { user: User }) => (
   <PristineModelLoginForm
-    defaultValues={{}}
+    defaultValues={{ ...null }}
     pristineValues={user}
     onSubmit={(values) => console.log(values)}
   >
@@ -137,7 +137,7 @@ const PristineModelLoginScreen = ({ user }: { user: User }) => (
         }}
       >
         <FieldText field={getField('username')} />
-        <FieldText field={getField('password')} secureTextEntry />
+        <FieldText field={getField('password')} />
         <FieldCheckbox field={getField('enabled')} />
       </form>
     )}

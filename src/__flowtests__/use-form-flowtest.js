@@ -28,7 +28,7 @@ function Screen() {
   return (
     <form>
       <FieldText field={getField('username')} />
-      <FieldText field={getField('password')} secureTextEntry />
+      <FieldText field={getField('password')} />
       {/* $FlowExpectedError */}
       <FieldText field={getField('noexist')} />
       <input type="submit" onPress={handleSubmit} />
@@ -54,7 +54,7 @@ function DefaultsScreen() {
   return (
     <form>
       <FieldText field={getField('username')} />
-      <FieldText field={getField('password')} secureTextEntry />
+      <FieldText field={getField('password')} />
       <input type="submit" onPress={handleSubmit} />
     </form>
   );
@@ -97,7 +97,7 @@ type PristineShape = {
 
 function PristineScreen() {
   useForm<PristineShape>({
-    defaultValues: {},
+    defaultValues: { ...null },
     pristineValues: { username: 'anon' },
     onSubmit: (values) => console.log(values),
   });
@@ -114,14 +114,16 @@ type User = {
 
 function PristineModelScreen({ user }: { user: User }) {
   const { getField } = useForm<$Optional<User>>({
-    defaultValues: {},
+    defaultValues: {
+      username: 'foo',
+    },
     pristineValues: user,
     onSubmit: (values) => console.log(values),
   });
   return (
     <form>
       <FieldText field={getField('username')} />
-      <FieldText field={getField('password')} secureTextEntry />
+      <FieldText field={getField('password')} />
       <FieldCheckbox field={getField('enabled')} />
     </form>
   );

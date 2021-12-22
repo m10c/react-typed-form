@@ -42,7 +42,7 @@ type Action<T, K: $Keys<T> = empty> =
       payload: $ReadOnly<{| name: $Keys<ErrorFields<T>>, error: string |}>,
     |}>;
 
-export default function reducer<T: {}>(
+export default function reducer<T: { ... }>(
   state: State<T>,
   action: Action<T>
 ): State<T> {

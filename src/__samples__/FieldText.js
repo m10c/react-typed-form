@@ -3,9 +3,9 @@
 import * as React from 'react';
 import type { FieldProp } from '..';
 
-type Props = $ReadOnly<{
+type Props = $ReadOnly<{|
   field: FieldProp<string>,
-}>;
+|}>;
 
 export default function FieldText({ field }: Props): React.Node {
   return (

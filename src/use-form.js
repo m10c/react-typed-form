@@ -6,7 +6,7 @@ import * as React from 'react';
 
 import reducer from './core/reducer';
 
-export default function useForm<T: {}>({
+export default function useForm<T: { ... }>({
   defaultValues = {},
   onSubmit,
   pristineValues,
@@ -17,7 +17,7 @@ export default function useForm<T: {}>({
   postValidateTransform,
 }: Options<T>): FormObject<T> {
   function determineErrors(values: T): FormErrors<T> {
-    if (!validator) return {};
+    if (!validator) return { ...null };
 
     const transformed = preValidateTransform?.(values) ?? values;
     /* eslint-disable flowtype/no-weak-types */

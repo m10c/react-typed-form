@@ -10,12 +10,12 @@ type Props<T> = $ReadOnly<{|
   children: (FormObject<T>) => React.Node,
 |}>;
 
-function WithHooks<T: {}>({ children, ...options }: Props<T>) {
+function WithHooks<T: { ... }>({ children, ...options }: Props<T>) {
   const form = useForm<T>(options);
   return children(form);
 }
 
-export default class FormComponent<T: {}> extends React.PureComponent<
+export default class FormComponent<T: { ... }> extends React.PureComponent<
   Props<T>
 > {
   render(): React.Node {
