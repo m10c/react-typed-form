@@ -2,8 +2,6 @@
  * See `src/types.js` for documented types
  */
 
-import * as React from 'react';
-
 export type ErrorFields<T> = T & { _form?: never };
 
 export type FormErrors<T extends {}> = Readonly<
@@ -36,15 +34,14 @@ export type FormObject<T> = Readonly<{
   hasLastErrors: boolean;
 }>;
 
-export type Options<T, TOut = T> = Readonly<{
+export type Options<T> = Readonly<{
+  defaultValues: T;
   onSubmit: (
     values: TOut,
     form: FormObject<T>
   ) => void | boolean | Promise<void> | Promise<boolean>;
-  defaultValues: T;
   pristineValues?: Partial<T>;
   validator?: (values: T) => FormErrors<T>;
-  transformValidator?: (values: T) => TOut | { _errors: FormErrors<T> };
   alwaysRevalidateOnChange?: boolean;
   revalidateFields?: Array<keyof T>;
   preValidateTransform?: (values: T) => T;

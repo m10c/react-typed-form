@@ -1,6 +1,7 @@
 ## 0.3.1
 
 - Fixed Flow types to be compatible with `exact_by_default`
+- Fixed TypeScript typedef to be aligned with Flow types.
 
 ## 0.3.0
 
