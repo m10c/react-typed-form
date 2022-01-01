@@ -35,7 +35,7 @@ export default function useForm<T: { ... }>({
       values: defaultValues,
       errors: determineErrors(defaultValues),
       lastErrors: {},
-      dirty: [],
+      dirtyFields: [],
       loading: false,
     },
     undefined
@@ -71,7 +71,7 @@ export default function useForm<T: { ... }>({
       label,
       value,
       handleValueChange: handleValueChange.bind(null, name),
-      isDirty: state.dirty.includes(name),
+      isDirty: state.dirtyFields.includes(name),
       isLoading: state.loading,
       errorList: state.errors[name],
       lastErrorList: state.lastErrors[name],
@@ -122,6 +122,8 @@ export default function useForm<T: { ... }>({
       lastErrors: state.lastErrors,
       hasErrors: Object.keys(state.errors).length > 0,
       hasLastErrors: Object.keys(state.lastErrors).length > 0,
+      dirtyFields: state.dirtyFields,
+      hasDirty: state.dirtyFields.length > 0,
     };
   }
 

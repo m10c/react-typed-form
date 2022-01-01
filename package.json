@@ -25,7 +25,7 @@
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib/commonjs && cp src/_index.js.flow lib/commonjs/index.js.flow",
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir lib/module && cp src/_index.js.flow lib/module/index.js.flow",
     "clean": "rimraf lib",
-    "lint": "eslint src/**/*.js",
+    "lint": "eslint src/**",
     "pretty": "prettier --write \"src/**/*.js\"",
     "test": "yarn flow && yarn run lint",
     "version": "npm run build"

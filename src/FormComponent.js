@@ -18,6 +18,7 @@ function WithHooks<T: { ... }>({ children, ...options }: Props<T>) {
 export default class FormComponent<T: { ... }> extends React.PureComponent<
   Props<T>
 > {
+  // eslint-disable-next-line no-undef
   render(): React.Node {
     return <WithHooks {...this.props} />;
   }

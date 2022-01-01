@@ -6,7 +6,7 @@ type State<T> = $ReadOnly<{|
   values: T,
   errors: FormErrors<T>,
   lastErrors: FormErrors<T>,
-  dirty: Array<$Keys<T>>,
+  dirtyFields: Array<$Keys<T>>,
   loading: boolean,
 |}>;
 
@@ -55,7 +55,7 @@ export default function reducer<T: { ... }>(
           ...state.values,
           [name]: value,
         },
-        dirty: [...state.dirty.filter((d) => d !== name), name],
+        dirtyFields: [...state.dirtyFields.filter((d) => d !== name), name],
         ...(errors && { errors }),
       };
     }
@@ -64,13 +64,13 @@ export default function reducer<T: { ... }>(
         ...state,
         errors: action.payload.errors,
         lastErrors: action.payload.errors,
-        dirty: [],
+        dirtyFields: [],
       };
     case 'RESET':
       return {
         ...action.payload,
         lastErrors: {},
-        dirty: [],
+        dirtyFields: [],
         loading: false,
       };
     case 'SET_LOADING':

@@ -1,5 +1,7 @@
 ## 0.3.1
 
+- Added _experimental_ Form Groups, usable with `useFormGroup` and `useFormGroupItem`.
+- Added `dirtyFields: string[]` and `hasDirty: boolean` to form object.
 - Fixed Flow types to be compatible with `exact_by_default`
 - Fixed TypeScript typedef to be aligned with Flow types.
 

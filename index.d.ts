@@ -32,6 +32,8 @@ export type FormObject<T> = Readonly<{
   lastErrors: FormErrors<ErrorFields<T>>;
   hasErrors: boolean;
   hasLastErrors: boolean;
+  dirtyFields: Array<keyof T>;
+  hasDirty: boolean;
 }>;
 
 export type Options<T> = Readonly<{
@@ -49,3 +51,47 @@ export type Options<T> = Readonly<{
 }>;
 
 export function useForm<T extends {}>(options: Options<T>): FormObject<T>;
+
+/**
+ * @experimental
+ */
+export type FormGroupItemControls = Readonly<{
+  aliases: string[];
+  setForm: (form: FormObject<any>) => void;
+  useSetForm: (form: FormObject<any>) => void;
+  remove: () => void;
+  addAlias: (alias: string) => void;
+}>;
+
+/**
+ * @experimental
+ */
+export type FormGroup = Readonly<{
+  addKey: (key: string) => void;
+  keys: string[];
+
+  isLoading: boolean;
+  hasLastErrors: boolean;
+  submit: (options: {
+    whitelistKeys?: string[];
+    onFinish?: (props: { hasErrors: boolean }) => mixed;
+  }) => Promise<boolean>;
+
+  getItemControls: (key: string) => FormGroupItemControls;
+}>;
+
+/**
+ * @experimental
+ */
+export function useFormGroup(options: {
+  initialForms?: { [key: string]: FormObject<any> | null };
+}): FormGroup;
+
+/**
+ * @experimental
+ */
+export function useFormGrouptem(
+  formGroup: FormGroup,
+  key: string,
+  form?: FormObject<any>
+): FormGroupItemControls;

@@ -70,6 +70,9 @@ export type FormObject<T> = $ReadOnly<{|
   lastErrors: FormErrors<T>,
   hasErrors: boolean,
   hasLastErrors: boolean,
+  // New for 0.3.1
+  dirtyFields: Array<$Keys<T>>,
+  hasDirty: boolean,
 |}>;
 
 /**
@@ -90,4 +93,39 @@ export type Options<T> = $ReadOnly<{|
   revalidateFields?: Array<$Keys<T>>,
   preValidateTransform?: (T) => T,
   postValidateTransform?: (T) => T,
+|}>;
+
+/**
+ * @experimental
+ */
+export type FormGroupItemControls = $ReadOnly<{|
+  aliases: string[],
+  // eslint-disable-next-line flowtype/no-weak-types
+  setForm: (form: FormObject<any>) => void,
+  // eslint-disable-next-line flowtype/no-weak-types
+  useSetForm: (form: FormObject<any>) => void,
+  remove: () => void,
+  addAlias: (alias: string) => void,
+|}>;
+
+/**
+ * @experimental
+ */
+export type FormGroup = $ReadOnly<{|
+  // eslint-disable-next-line flowtype/no-weak-types
+  addKey: (key: string) => void,
+  keys: string[],
+
+  // Similar to FormObject properties, but for the group
+  isLoading: boolean,
+  hasLastErrors: boolean,
+  submit: ({
+    whitelistKeys?: string[],
+    onFinish?: ({ hasErrors: boolean }) => mixed,
+  }) => Promise<boolean>,
+
+  /**
+   * Called internally from useFormGroupItem
+   */
+  getItemControls: (key: string) => FormGroupItemControls,
 |}>;
