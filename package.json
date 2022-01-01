@@ -36,19 +36,19 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.4.0",
+    "@babel/eslint-parser": "^7.16.5",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.4.0",
     "@babel/preset-env": "^7.4.2",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
-    "babel-eslint": "^10.0.1",
     "cross-env": "^7.0.2",
-    "eslint": "^7.11.0",
-    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint": "^8.6.0",
+    "eslint-plugin-flowtype": "^8.0.3",
     "eslint-plugin-react": "^7.8.2",
     "flow-bin": "0.137.0",
     "prettier": "^2.1.2",
-    "react": "^16.8.0",
+    "react": "^17.0.2",
     "rimraf": "^3.0.2"
   },
   "peerDependencies": {

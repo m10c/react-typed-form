@@ -1,5 +1,5 @@
 ---
-parser: babel-eslint
+parser: '@babel/eslint-parser'
 plugins: [flowtype]
 env:
   es6: true
@@ -9,7 +9,7 @@ extends:
   - eslint:recommended
   - plugin:flowtype/recommended
   - plugin:react/recommended
-  
+
 globals:
   console: false
 
