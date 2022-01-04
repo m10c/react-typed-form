@@ -28,15 +28,21 @@ export default function useFormGroup({
     formsRef.current = forms;
   }, []);
 
+  const setAllLoading = React.useCallback(function setAllLoading(
+    value: boolean
+  ) {
+    setLoading(value);
+    for (const key of keys) {
+      const form = formsRef.current[key];
+      form?.setLoading(value);
+    }
+  },
+  []);
+
   const submit = React.useCallback(
     async function submit({ whitelistKeys, onFinish } = {}): Promise<boolean> {
-      setLoading(true);
+      setAllLoading(true);
       let hasErrors = false;
-
-      for (const key of keys) {
-        const form = formsRef.current[key];
-        form?.setLoading(true);
-      }
 
       for (const key of keys) {
         const form = formsRef.current[key];
@@ -54,16 +60,9 @@ export default function useFormGroup({
         }
       }
 
-      for (const key of keys) {
-        const form = formsRef.current[key];
-        form?.setLoading(false);
-      }
-
       setHasLastErrors(hasErrors);
-      setLoading(false);
-      if (!hasErrors) {
-        onFinish?.({ hasErrors });
-      }
+      setAllLoading(false);
+      onFinish?.({ hasErrors });
 
       return !hasErrors;
     },
@@ -100,6 +99,7 @@ export default function useFormGroup({
     addKey,
     keys,
     isLoading: loading,
+    setLoading: setAllLoading,
     hasLastErrors,
     submit,
     getItemControls,

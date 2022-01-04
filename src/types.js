@@ -118,6 +118,7 @@ export type FormGroup = $ReadOnly<{|
 
   // Similar to FormObject properties, but for the group
   isLoading: boolean,
+  setLoading: (boolean) => void,
   hasLastErrors: boolean,
   submit: ({
     whitelistKeys?: string[],

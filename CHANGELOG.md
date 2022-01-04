@@ -1,3 +1,8 @@
+## 0.3.2
+
+- Added `setLoading` to experimental Form Groups.
+- Fix TypeScript typedef.
+
 ## 0.3.1
 
 - Added _experimental_ Form Groups, usable with `useFormGroup` and `useFormGroupItem`.

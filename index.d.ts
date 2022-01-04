@@ -4,9 +4,9 @@
 
 export type ErrorFields<T> = T & { _form?: never };
 
-export type FormErrors<T extends {}> = Readonly<
-  { [P in keyof T]?: string[] | undefined }
->;
+export type FormErrors<T extends {}> = Readonly<{
+  [P in keyof T]?: string[] | undefined;
+}>;
 
 export type FieldProp<FTOut, FTIn = FTOut | undefined> = Readonly<{
   name: string;
@@ -39,7 +39,7 @@ export type FormObject<T> = Readonly<{
 export type Options<T> = Readonly<{
   defaultValues: T;
   onSubmit: (
-    values: TOut,
+    values: T,
     form: FormObject<T>
   ) => void | boolean | Promise<void> | Promise<boolean>;
   pristineValues?: Partial<T>;
@@ -71,10 +71,11 @@ export type FormGroup = Readonly<{
   keys: string[];
 
   isLoading: boolean;
+  setLoading: (loading: boolean) => void;
   hasLastErrors: boolean;
   submit: (options: {
     whitelistKeys?: string[];
-    onFinish?: (props: { hasErrors: boolean }) => mixed;
+    onFinish?: (props: { hasErrors: boolean }) => void;
   }) => Promise<boolean>;
 
   getItemControls: (key: string) => FormGroupItemControls;
