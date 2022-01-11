@@ -1,3 +1,7 @@
+# 0.3.3
+
+- Fix loading state of experiment Form Groups.
+
 ## 0.3.2
 
 - Added `setLoading` to experimental Form Groups.

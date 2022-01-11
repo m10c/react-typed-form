@@ -28,16 +28,16 @@ export default function useFormGroup({
     formsRef.current = forms;
   }, []);
 
-  const setAllLoading = React.useCallback(function setAllLoading(
-    value: boolean
-  ) {
-    setLoading(value);
-    for (const key of keys) {
-      const form = formsRef.current[key];
-      form?.setLoading(value);
-    }
-  },
-  []);
+  const setAllLoading = React.useCallback(
+    function setAllLoading(value: boolean) {
+      setLoading(value);
+      for (const key of keys) {
+        const form = formsRef.current[key];
+        form?.setLoading(value);
+      }
+    },
+    [keys]
+  );
 
   const submit = React.useCallback(
     async function submit({ whitelistKeys, onFinish } = {}): Promise<boolean> {
