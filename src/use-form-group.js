@@ -47,7 +47,7 @@ export default function useFormGroup({
       for (const key of keys) {
         const form = formsRef.current[key];
         if (!form) continue;
-        if (whitelistKeys?.includes(key)) continue;
+        if (whitelistKeys && !whitelistKeys.includes(key)) continue;
 
         if (!form.hasDirty) continue;
 

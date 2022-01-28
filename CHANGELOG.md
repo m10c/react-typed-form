@@ -1,4 +1,8 @@
-# 0.3.3
+## 0.3.4
+
+- Fixed `whitelistKeys` in experimental Form Groups.
+
+## 0.3.3
 
 - Fix loading state of experiment Form Groups.
 
