@@ -1,5 +1,6 @@
 ## 0.3.4
 
+- Changed `dirtyFields` to include fields from `defaultValues` when form is first loaded.
 - Fixed `whitelistKeys` in experimental Form Groups.
 
 ## 0.3.3

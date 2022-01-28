@@ -35,7 +35,7 @@ export default function useForm<T: { ... }>({
       values: defaultValues,
       errors: determineErrors(defaultValues),
       lastErrors: {},
-      dirtyFields: [],
+      dirtyFields: Object.keys(defaultValues),
       loading: false,
     },
     undefined
