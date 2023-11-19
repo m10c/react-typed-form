@@ -114,6 +114,7 @@ export type FormGroupItemControls = $ReadOnly<{|
 export type FormGroup = $ReadOnly<{|
   // eslint-disable-next-line flowtype/no-weak-types
   addKey: (key: string) => void,
+  hasKeyOrAlias: (keyOrAlias: string) => boolean,
   keys: string[],
 
   // Similar to FormObject properties, but for the group
@@ -128,5 +129,5 @@ export type FormGroup = $ReadOnly<{|
   /**
    * Called internally from useFormGroupItem
    */
-  getItemControls: (key: string) => FormGroupItemControls,
+  _getItemControls: (key: string) => FormGroupItemControls,
 |}>;

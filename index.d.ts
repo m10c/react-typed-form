@@ -68,6 +68,7 @@ export type FormGroupItemControls = Readonly<{
  */
 export type FormGroup = Readonly<{
   addKey: (key: string) => void;
+  hasKeyOrAlias: (keyOrAlias: string) => boolean;
   keys: string[];
 
   isLoading: boolean;
@@ -78,14 +79,14 @@ export type FormGroup = Readonly<{
     onFinish?: (props: { hasErrors: boolean }) => void;
   }) => Promise<boolean>;
 
-  getItemControls: (key: string) => FormGroupItemControls;
+  _getItemControls: (key: string) => FormGroupItemControls;
 }>;
 
 /**
  * @experimental
  */
 export function useFormGroup(options: {
-  initialForms?: { [key: string]: FormObject<any> | null };
+  initialKeys?: string[];
 }): FormGroup;
 
 /**

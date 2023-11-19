@@ -17,7 +17,7 @@ export default function useFormGrouptem({
   key: string,
   form?: FormObject<any>,
 }): FormGroupItemControls {
-  const itemControls = formGroup.getItemControls(key);
+  const itemControls = formGroup._getItemControls(key);
 
   React.useEffect(() => {
     form && itemControls.setForm(form);

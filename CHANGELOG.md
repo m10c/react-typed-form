@@ -1,3 +1,8 @@
+## 0.3.5
+
+- Add `hasKeyOrAlias` to experimental Form Groups.
+- Fix TypeScript types for experimental Form Groups.
+
 ## 0.3.4
 
 - Changed `dirtyFields` to include fields from `defaultValues` when form is first loaded.

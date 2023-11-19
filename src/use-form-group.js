@@ -69,7 +69,7 @@ export default function useFormGroup({
     [keys]
   );
 
-  const getItemControls = React.useCallback(
+  const _getItemControls = React.useCallback(
     (key: string) => ({
       aliases: aliases.filter((a) => a[0] === key).map((a) => a[1]),
       setForm: (form: FormObject<any>): void => {
@@ -95,13 +95,31 @@ export default function useFormGroup({
     [aliases]
   );
 
+  const hasKeyOrAlias = React.useCallback(
+    (keyOrAlias: string): boolean => {
+      if (keys.includes(keyOrAlias)) return true;
+      if (
+        keys.some((key) => _getItemControls(key).aliases.includes(keyOrAlias))
+      ) {
+        return true;
+      }
+      return false;
+    },
+    [aliases, keys]
+  );
+
   return {
     addKey,
+    hasKeyOrAlias,
     keys,
+
+    // replicating form API
     isLoading: loading,
     setLoading: setAllLoading,
     hasLastErrors,
     submit,
-    getItemControls,
+
+    // internal
+    _getItemControls,
   };
 }
