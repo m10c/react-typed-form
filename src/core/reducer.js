@@ -21,9 +21,10 @@ type Action<T, K: $Keys<T> = empty> =
       |}>,
     |}>
   | $ReadOnly<{|
-      type: 'SUBMIT',
+      type: 'VALIDATE',
       payload: $ReadOnly<{|
         errors: FormErrors<T>,
+        isSubmit: boolean,
       |}>,
     |}>
   | $ReadOnly<{|
@@ -59,11 +60,11 @@ export default function reducer<T: { ... }>(
         ...(errors && { errors }),
       };
     }
-    case 'SUBMIT':
+    case 'VALIDATE':
       return {
         ...state,
         errors: action.payload.errors,
-        lastErrors: action.payload.errors,
+        lastErrors: action.payload.isSubmit ? action.payload.errors : state.lastErrors,
         dirtyFields: [],
       };
     case 'RESET':

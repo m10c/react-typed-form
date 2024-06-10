@@ -5,7 +5,7 @@
 export type ErrorFields<T> = T & { _form?: never };
 
 export type FormErrors<T extends {}> = Readonly<{
-  [P in keyof T]?: string[] | undefined;
+  [P in keyof ErrorFields<T>]?: string[] | undefined;
 }>;
 
 export type FieldProp<FTOut, FTIn = FTOut | undefined> = Readonly<{
@@ -28,12 +28,13 @@ export type FormObject<T> = Readonly<{
   formErrorList: string[];
   values: T;
   reset: () => void;
-  errors: FormErrors<ErrorFields<T>>;
-  lastErrors: FormErrors<ErrorFields<T>>;
+  errors: FormErrors<T>;
+  lastErrors: FormErrors<T>;
   hasErrors: boolean;
   hasLastErrors: boolean;
   dirtyFields: Array<keyof T>;
   hasDirty: boolean;
+  validate: (options: { isSubmit: boolean }) => null | FormErrors<T>,
 }>;
 
 export type Options<T> = Readonly<{
@@ -43,7 +44,7 @@ export type Options<T> = Readonly<{
     form: FormObject<T>
   ) => void | boolean | Promise<void> | Promise<boolean>;
   pristineValues?: Partial<T>;
-  validator?: (values: T) => FormErrors<T>;
+  validator?: (values: T, options: { isSubmit: boolean }) => FormErrors<T>;
   alwaysRevalidateOnChange?: boolean;
   revalidateFields?: Array<keyof T>;
   preValidateTransform?: (values: T) => T;

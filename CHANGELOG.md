@@ -1,3 +1,8 @@
+## 0.3.6
+
+- Add `validate(options: { isSubmit: boolean })` method to the Form Object, to trigger form validation without the `onSubmit` action.
+- Add `options: { isSubmit: boolean }` to the validator, to allow varied logic depending on the validation trigger.
+
 ## 0.3.5
 
 - Add `hasKeyOrAlias` to experimental Form Groups.
