@@ -2,6 +2,7 @@
 
 - Add `validate(options: { isSubmit: boolean })` method to the Form Object, to trigger form validation without the `onSubmit` action.
 - Add `options: { isSubmit: boolean }` to the validator, to allow varied logic depending on the validation trigger.
+- Fix TypeScript definition for FormErrors
 
 ## 0.3.5
 
