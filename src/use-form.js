@@ -16,28 +16,32 @@ export default function useForm<T: { ... }>({
   preValidateTransform,
   postValidateTransform,
 }: Options<T>): FormObject<T> {
-  function determineErrors(values: T): FormErrors<T> {
+  function determineErrors(values: T, options: { isSubmit: boolean }): FormErrors<T> {
     if (!validator) return { ...null };
 
     const transformed = preValidateTransform?.(values) ?? values;
     /* eslint-disable flowtype/no-weak-types */
     return Object.fromEntries(
-      (Object.entries((validator(transformed): any)).filter(
+      (Object.entries((validator(transformed, options): any)).filter(
         ([, v]) => (v: any)?.length > 0
       ): any)
     );
     /* eslint-enable flowtype/no-weak-types */
   }
 
-  const [state, dispatch] = React.useReducer(
-    reducer,
-    {
+  const initialState = React.useMemo(
+    () => ({
       values: defaultValues,
-      errors: determineErrors(defaultValues),
+      errors: determineErrors(defaultValues, { isSubmit: false }),
       lastErrors: {},
       dirtyFields: Object.keys(defaultValues),
       loading: false,
-    },
+    }),
+    []
+  );
+  const [state, dispatch] = React.useReducer(
+    reducer,
+    initialState,
     undefined
   );
 
@@ -47,7 +51,7 @@ export default function useForm<T: { ... }>({
   ): void {
     const errors =
       alwaysRevalidateOnChange || revalidateFields?.includes(name)
-        ? determineErrors({ ...state.values, [name]: value })
+        ? determineErrors({ ...state.values, [name]: value }, { isSubmit: false })
         : undefined;
     dispatch({ type: 'VALUE_CHANGE', payload: { name, value, errors } });
   }
@@ -78,15 +82,19 @@ export default function useForm<T: { ... }>({
     };
   }
 
+  function validate(options: { isSubmit: boolean }): null | FormErrors<T> {
+    const errors = determineErrors(state.values, options);
+    dispatch({ type: 'VALIDATE', payload: { errors, isSubmit: options.isSubmit } });
+
+    return (Object.keys(errors).length === 0) ? null : errors;
+  }
+
   /**
    * Keep this async and return true on successful submit so that users can
    * await it.
    */
   async function handleSubmit(): Promise<boolean> {
-    const errors = determineErrors(state.values);
-
-    dispatch({ type: 'SUBMIT', payload: { errors } });
-    if (Object.keys(errors).length > 0) return false;
+    if (validate({ isSubmit: true })) return false;
 
     let transformed = (preValidateTransform || ((x) => x))(state.values);
     transformed = (postValidateTransform || ((x) => x))(transformed);
@@ -110,12 +118,13 @@ export default function useForm<T: { ... }>({
       },
       formErrorList: state.lastErrors._form || [],
       values: state.values,
+      validate,
       reset: () =>
         dispatch({
           type: 'RESET',
           payload: {
             values: defaultValues,
-            errors: determineErrors(defaultValues),
+            errors: determineErrors(defaultValues, { isSubmit: false }),
           },
         }),
       errors: state.errors,

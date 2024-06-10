@@ -73,6 +73,8 @@ export type FormObject<T> = $ReadOnly<{|
   // New for 0.3.1
   dirtyFields: Array<$Keys<T>>,
   hasDirty: boolean,
+  // New form 0.3.6
+  validate: (options: { isSubmit: boolean }) => null | FormErrors<T>,
 |}>;
 
 /**
@@ -88,7 +90,7 @@ export type Options<T> = $ReadOnly<{|
 
   // Optional
   pristineValues?: $Shape<T>, // Pristine values don't count as changes
-  validator?: (values: T) => FormErrors<T>,
+  validator?: (values: T, options: { isSubmit: boolean }) => FormErrors<T>,
   alwaysRevalidateOnChange?: boolean,
   revalidateFields?: Array<$Keys<T>>,
   preValidateTransform?: (T) => T,
